@@ -10,29 +10,48 @@ using std::cin;
 using std::endl;
 using std::string;
 using std::vector;
-
+using std::setw;
+using std::right;
+using std::left;
+using std::setfill;
+using std::fixed;
+using std::setprecision;
 
 struct Student{
     string firstName;
     string lastName;
-    vector <int> grades;
+    vector <double> grades;
     int exam;
-    float finalGrade;
+    double finalGrade;
 };
 
 void printStudent(Student student){
-    cout << student.firstName << " " << student.lastName << endl;
-    for (int i = 0; i < student.grades.size(); i++){
-        cout << student.grades[i] << endl;
-    }
-    cout << "Final grade: ";
-    cout << student.finalGrade << endl;
+    // -- header --
+    cout << left
+        << setw(15) << "Last name"
+        << setw(10) << "Name"
+        << setw(4) << "Final grade (mean)" << endl;
+    
+    // -- seperator line --
+    cout << setfill('-')
+              << setw(15) << ""
+              << setw(10) << ""
+              << setw(18) << "" << endl
+              << setfill(' ');
+
+    // -- student data --
+    cout << left 
+        << setw(15) << student.lastName 
+        << setw(10) << left << student.firstName
+        << right << fixed << setprecision(2)
+        << setw(4) << left << student.finalGrade << endl; 
 }
 
 Student getUserInput(){
     Student student;
     string grade;
-    int n, temp_grade;
+    double temp_grade;
+    int n;
 
     cout << "Input student data." << endl;
     cout << "First name: "; cin >> student.firstName;
@@ -50,7 +69,7 @@ Student getUserInput(){
 }
 
 Student calcFinalGrade(Student student){
-    int sumGrades = 0;
+    double sumGrades = 0;
     for (int i = 0; i < student.grades.size(); i++){
         sumGrades += student.grades[i];
     }
