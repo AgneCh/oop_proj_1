@@ -2,6 +2,7 @@
 #include <iomanip>
 #include<vector>
 #include<string>
+#include<algorithm>
 
 
 //using namespace std;
@@ -16,13 +17,15 @@ using std::left;
 using std::setfill;
 using std::fixed;
 using std::setprecision;
+using std::sort;
 
 struct Student{
     string firstName;
     string lastName;
     vector <double> grades;
-    int exam;
-    double finalGrade;
+    double exam;
+    double finalGradeMean;
+    double finalGradeMedian;
 };
 
 void printStudent(Student student){
@@ -30,21 +33,24 @@ void printStudent(Student student){
     cout << left
         << setw(15) << "Last name"
         << setw(10) << "Name"
-        << setw(4) << "Final grade (mean)" << endl;
+        << setw(20) << "Final grade (mean)"
+        << setw(20) << "Final grade (median)" << endl;
     
-    // -- seperator line --
+    // -- separator line --
     cout << setfill('-')
               << setw(15) << ""
               << setw(10) << ""
-              << setw(18) << "" << endl
+              << setw(20) << ""
+              << setw(20) << "" << endl
               << setfill(' ');
 
     // -- student data --
     cout << left 
         << setw(15) << student.lastName 
-        << setw(10) << left << student.firstName
-        << right << fixed << setprecision(2)
-        << setw(4) << left << student.finalGrade << endl; 
+        << setw(10) << student.firstName
+        << fixed << setprecision(2)
+        << setw(20) << student.finalGradeMean
+        << setw(20) << student.finalGradeMedian << endl; 
 }
 
 Student getUserInput(){
@@ -69,6 +75,8 @@ Student getUserInput(){
 }
 
 Student calcFinalGrade(Student student){
+
+    // calculte mean
     double sumGrades = 0;
     for (int i = 0; i < student.grades.size(); i++){
         sumGrades += student.grades[i];
@@ -77,7 +85,19 @@ Student calcFinalGrade(Student student){
     cout << "sumGrades: "<< sumGrades <<endl;
     cout << student.exam << endl;
     cout << student.grades.size() << endl;
-    student.finalGrade = sumGrades / (student.grades.size() + 1);
+    student.finalGradeMean = sumGrades / (student.grades.size() + 1);
+    
+    // calculte median
+    vector <double> allGrades = student.grades;
+    allGrades.push_back(student.exam);
+    int n = allGrades.size();
+    sort(allGrades.begin(), allGrades.end());
+    if (n % 2 != 0){
+        student.finalGradeMedian = allGrades[n / 2];
+    } else{
+        student.finalGradeMedian = (allGrades[(n - 1) / 2] + allGrades[n / 2]) / 2.0;
+    }
+
 
     return student;
 }
