@@ -4,6 +4,7 @@
 #include <string>
 #include <algorithm>
 #include <limits>
+#include <random>
 
 // using namespace std;
 using std::cin;
@@ -12,7 +13,9 @@ using std::endl;
 using std::fixed;
 using std::invalid_argument;
 using std::left;
+using std::mt19937;
 using std::numeric_limits;
+using std::random_device;
 using std::setfill;
 using std::setprecision;
 using std::setw;
@@ -20,6 +23,7 @@ using std::sort;
 using std::stof;
 using std::streamsize;
 using std::string;
+using std::uniform_int_distribution;
 using std::vector;
 
 struct Student
@@ -89,7 +93,6 @@ void printStudents(vector<Student> &students, string mode)
     const int wGrade = 20;
     Student student;
 
-
     printHeader(wLastName, wFirsName, wGrade, mode);
     for (int i = 0; i < students.size(); i++)
     {
@@ -128,12 +131,23 @@ void printStudents(vector<Student> &students, string mode)
     }
 }
 
+int getRandomGrade(int min, int max)
+{
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> dist(2, 10);
+
+    int randomGrade = dist(gen);
+    return randomGrade;
+}
+
 Student getUserStudentInput()
 {
     Student student;
     string grade;
     double temp_grade;
     string stopWord = "stop";
+    string randomWord = "r";
     string userInput;
 
     cout << "Input student data." << endl;
@@ -153,16 +167,24 @@ Student getUserStudentInput()
             break;
         }
 
-        // check if input contains number
-        // TODO: allows 2k5 -> 2. maybe we need to fix
-        try
+        if (userInput == randomWord)
         {
-            temp_grade = stof(userInput);
+            temp_grade = getRandomGrade(2, 10);
+            cout << "Random grade is:" << temp_grade << endl;
         }
-        catch (invalid_argument err)
+        else
         {
-            cout << "Invalid input!" << endl;
-            continue;
+            // check if input contains number
+            // TODO: allows 2k5 -> 2. maybe we need to fix
+            try
+            {
+                temp_grade = stof(userInput);
+            }
+            catch (invalid_argument err)
+            {
+                cout << "Invalid input!" << endl;
+                continue;
+            }
         }
 
         // check if grade is 2-10
@@ -176,8 +198,18 @@ Student getUserStudentInput()
         }
     }
 
-    cout << "Input exam grade: ";
-    cin >> student.exam;
+    cout << "Input exam grade manually, or write 'r' to generated random grade: ";
+    cin >> userInput;
+    if (userInput == randomWord)
+    {
+        temp_grade = getRandomGrade(2, 10);
+        cout << "Random exam grade is: " << temp_grade << endl;
+    }
+    else
+    {
+        temp_grade = stof(userInput);
+    }
+    student.exam = temp_grade;
 
     return student;
 }
@@ -231,7 +263,7 @@ int getUserMenuChoice()
 
     while (true)
     {
-        //TODO: user selects 2 without student data input
+        // TODO: user selects 2 without student data input
         cout << "Choose number from the menu:" << endl;
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
@@ -253,7 +285,6 @@ void getModeChoice(string &mode)
     cout << "md = median" << endl;
     cout << "b = both" << endl;
 
-
     while (true)
     {
         cin >> mode;
@@ -270,7 +301,6 @@ int main()
 {
     string mode;
     vector<Student> students;
-
 
     while (true)
     {
