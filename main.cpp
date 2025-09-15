@@ -20,15 +20,16 @@ struct Student{
     float finalGrade;
 };
 
-void print_student(Student student){
+void printStudent(Student student){
     cout << student.firstName << " " << student.lastName << endl;
     for (int i = 0; i < student.grades.size(); i++){
         cout << student.grades[i] << endl;
     }
+    cout << "Final grade: ";
     cout << student.finalGrade << endl;
 }
 
-Student get_user_input(){
+Student getUserInput(){
     Student student;
     string grade;
     int n, temp_grade;
@@ -57,14 +58,14 @@ Student calcFinalGrade(Student student){
     cout << "sumGrades: "<< sumGrades <<endl;
     cout << student.exam << endl;
     cout << student.grades.size() << endl;
-    student.finalGrade = sumGrades / student.grades.size() + 1;
+    student.finalGrade = sumGrades / (student.grades.size() + 1);
 
     return student;
 }
 
 int main(){
-    Student student = get_user_input();
+    Student student = getUserInput();
     student = calcFinalGrade(student);
-    print_student(student);
+    printStudent(student);
     return 0;
 }
