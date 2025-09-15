@@ -231,6 +231,7 @@ int getUserMenuChoice()
 
     while (true)
     {
+        //TODO: user selects 2 without student data input
         cout << "Choose number from the menu:" << endl;
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
@@ -251,13 +252,14 @@ void getModeChoice(string &mode)
     cout << "m = mean" << endl;
     cout << "md = median" << endl;
     cout << "b = both" << endl;
-    cin >> mode;
+
 
     while (true)
     {
-        if (mode != "m" || mode != "md" || mode != "b")
+        cin >> mode;
+        if (mode != "m" && mode != "md" && mode != "b")
         {
-            cout << "You must input valid value!";
+            cout << "You must input valid value!" << endl;
             continue;
         }
         break;
