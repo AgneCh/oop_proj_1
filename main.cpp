@@ -28,29 +28,79 @@ struct Student{
     double finalGradeMedian;
 };
 
-void printStudent(Student student){
-    // -- header --
-    cout << left
-        << setw(15) << "Last name"
-        << setw(10) << "Name"
-        << setw(20) << "Final grade (mean)"
-        << setw(20) << "Final grade (median)" << endl;
-    
-    // -- separator line --
-    cout << setfill('-')
-              << setw(15) << ""
-              << setw(10) << ""
-              << setw(20) << ""
-              << setw(20) << "" << endl
-              << setfill(' ');
+void printStudent(const Student& student, string mode){
 
-    // -- student data --
-    cout << left 
-        << setw(15) << student.lastName 
-        << setw(10) << student.firstName
-        << fixed << setprecision(2)
-        << setw(20) << student.finalGradeMean
-        << setw(20) << student.finalGradeMedian << endl; 
+    const int wLastName = 15;
+    const int wFirsName = 10;
+    const int wGrade = 20;
+
+    if (mode == "m"){
+        // -- header --
+        cout << left
+            << setw(wLastName) << "Last name"
+            << setw(wFirsName) << "Name"
+            << setw(wGrade) << "Final grade (mean)" << endl;
+        
+        // -- separator line --
+        cout << setfill('-')
+                << setw(wLastName) << ""
+                << setw(wFirsName) << ""
+                << setw(wGrade) << "" << endl
+                << setfill(' ');
+
+        // -- student data --
+        cout << left 
+            << setw(wLastName) << student.lastName 
+            << setw(wFirsName) << student.firstName
+            << fixed << setprecision(2)
+            << setw(wGrade) << student.finalGradeMean << endl; 
+
+    } else if (mode == "md"){
+        // -- header --
+        cout << left
+            << setw(wLastName) << "Last name"
+            << setw(wFirsName) << "Name"
+            << setw(wGrade) << "Final grade (median)" << endl;
+        
+        // -- separator line --
+        cout << setfill('-')
+                << setw(wLastName) << ""
+                << setw(wFirsName) << ""
+                << setw(wGrade) << "" << endl
+                << setfill(' ');
+
+        // -- student data --
+        cout << left 
+            << setw(wLastName) << student.lastName 
+            << setw(wFirsName) << student.firstName
+            << fixed << setprecision(2)
+            << setw(wGrade) << student.finalGradeMedian << endl; 
+
+    } else {
+        // -- header --
+        cout << left
+            << setw(wLastName) << "Last name"
+            << setw(wFirsName) << "Name"
+            << setw(wGrade) << "Final grade (mean)"
+            << setw(wGrade) << "Final grade (median)" << endl;
+        
+        // -- separator line --
+        cout << setfill('-')
+                << setw(wLastName) << ""
+                << setw(wFirsName) << ""
+                << setw(wGrade) << ""
+                << setw(wGrade) << "" << endl
+                << setfill(' ');
+
+        // -- student data --
+        cout << left 
+            << setw(wLastName) << student.lastName 
+            << setw(wFirsName) << student.firstName
+            << fixed << setprecision(2)
+            << setw(wGrade) << student.finalGradeMean
+            << setw(wGrade) << student.finalGradeMedian << endl; 
+    }
+
 }
 
 Student getUserInput(){
@@ -109,8 +159,13 @@ Student calcFinalGrade(Student student){
 }
 
 int main(){
+    string mode;
     Student student = getUserInput();
     student = calcFinalGrade(student);
-    printStudent(student);
+    cout << "How would you like to calclated the final grade? Using:" << endl;
+    cout << "m = mean" << endl;
+    cout << "md = median" << endl;
+    cout << "b = both" << endl; cin>>mode;
+    printStudent(student, mode);
     return 0;
 }
