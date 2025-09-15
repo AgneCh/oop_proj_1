@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <limits>
 
 
 //using namespace std;
@@ -12,12 +13,15 @@ using std::endl;
 using std::string;
 using std::vector;
 using std::setw;
-using std::right;
 using std::left;
 using std::setfill;
 using std::fixed;
 using std::setprecision;
 using std::sort;
+using std::stof;
+using std::invalid_argument;
+using std::numeric_limits;
+using std::streamsize;
 
 struct Student{
     string firstName;
@@ -103,20 +107,42 @@ void printStudent(const Student& student, string mode){
 
 }
 
-Student getUserInput(){
+Student getUserStudentInput(){
     Student student;
     string grade;
     double temp_grade;
-    int n;
+    string stopWord = "stop";
+    string userInput;
+
 
     cout << "Input student data." << endl;
     cout << "First name: "; cin >> student.firstName;
     cout << "Last name: "; cin >> student.lastName;
-    cout << "How many grades does " << student.firstName << " " << student.lastName << " have? "; cin >> n; 
-    
-    for (int i = 0; i < n; i++){
-        cout << i +1 << " grade: "; cin >> temp_grade;
-        student.grades.push_back(temp_grade);
+    cout << "Enter " << student.firstName << "'s " << student.lastName << " homework grade (2-10), one at the time." << endl; 
+
+    while(true){
+
+        cout << "Input grade or type 'stop': "; cin >> userInput;
+        if(userInput == stopWord){
+            break;
+        }
+        
+        // check if input contains number
+        // TODO: allows 2k5 -> 2. maybe we need to fix
+        try{
+            temp_grade = stof(userInput); 
+        }catch(invalid_argument err){
+            cout << "Invalid input!" << endl;
+            continue;
+        }
+        
+        // check if grade is 2-10
+        if(temp_grade >= 2 && temp_grade <= 10){
+            student.grades.push_back(temp_grade);
+        }else{
+            cout << "Grade must be between 2 and 10." << endl;
+        }
+        
     }
 
     cout << "Input exam grade: "; cin >> student.exam;
@@ -158,10 +184,36 @@ Student calcFinalGrade(Student student){
     return student;
 }
 
+int getUserMenuChoice(){
+    int n;
+
+    while(true){
+        cout << "Choose number from the menu:" << endl;
+        cout << "1. Add new student" << endl;
+        cout << "2. Calculate grades" << endl;
+        cin >> n;
+        if (n == 1 || n == 2){
+            return n;
+        }
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+         cout << "Invalid menu number!"<< endl;
+    }
+
+}
+
 int main(){
     string mode;
-    Student student = getUserInput();
-    student = calcFinalGrade(student);
+    vector <Student> students;
+    int menuChoice = getUserMenuChoice();
+    if(menuChoice == 1){
+        students.push_back(getUserStudentInput());
+    } else {
+        for(int i=0; i < students.size(); i++){
+            student = calcFinalGrade(i);
+        }
+    }
+    
     cout << "How would you like to calclated the final grade? Using:" << endl;
     cout << "m = mean" << endl;
     cout << "md = median" << endl;
