@@ -1,8 +1,8 @@
 #include <iostream>
 #include <iomanip>
-#include<vector>
-#include<string>
-#include<algorithm>
+#include <vector>
+#include <string>
+#include <algorithm>
 
 
 //using namespace std;
@@ -74,30 +74,36 @@ Student getUserInput(){
     return student;
 }
 
-Student calcFinalGrade(Student student){
-
-    // calculte mean
-    double sumGrades = 0;
-    for (int i = 0; i < student.grades.size(); i++){
-        sumGrades += student.grades[i];
+double hwMean(vector<double> grades){
+    if (grades.empty()){
+        return 0.00;
     }
-    sumGrades += student.exam;
-    cout << "sumGrades: "<< sumGrades <<endl;
-    cout << student.exam << endl;
-    cout << student.grades.size() << endl;
-    student.finalGradeMean = sumGrades / (student.grades.size() + 1);
-    
-    // calculte median
-    vector <double> allGrades = student.grades;
-    allGrades.push_back(student.exam);
-    int n = allGrades.size();
-    sort(allGrades.begin(), allGrades.end());
+
+    double sum = 0.0; 
+    for (double i : grades) sum += i;
+    return sum / grades.size();
+}
+
+double hwMedian(vector<double> grades){
+    if (grades.empty()){
+        return 0.00;
+    }
+
+    sort(grades.begin(), grades.end());
+    int n = grades.size();
     if (n % 2 != 0){
-        student.finalGradeMedian = allGrades[n / 2];
-    } else{
-        student.finalGradeMedian = (allGrades[(n - 1) / 2] + allGrades[n / 2]) / 2.0;
+        return grades[n / 2];
+    } else {
+        return (grades[(n - 1) / 2] + grades[n / 2]) / 2.0;
     }
+}
 
+Student calcFinalGrade(Student student){
+    double mean = hwMean(student.grades);
+    double median = hwMedian(student.grades);
+
+    student.finalGradeMean = 0.4 * mean + 0.6 * student.exam;
+    student.finalGradeMedian = 0.4 * median + 0.6 * student.exam;
 
     return student;
 }
