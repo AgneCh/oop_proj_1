@@ -5,12 +5,14 @@
 #include <algorithm>
 #include <limits>
 #include <random>
+#include <fstream>
 
 // using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
 using std::fixed;
+using std::ifstream;
 using std::invalid_argument;
 using std::left;
 using std::mt19937;
@@ -263,8 +265,9 @@ int getUserMenuChoice()
         cout << "Choose number from the menu:" << endl;
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
+        cout << "3. Insert student data from a file" << endl;
         cin >> n;
-        if (n == 1 || n == 2)
+        if (n == 1 || n == 2 || n == 3)
         {
             return n;
         }
@@ -293,11 +296,25 @@ void getModeChoice(string &mode)
     }
 }
 
+int readFile(string file)
+{
+    string fileText;
+    ifstream f(file);
+
+    if (!f.is_open()){
+        cout << "Error opening the file!" << endl;
+        return 1;
+    }
+    cout << fileText << endl;
+    f.close();
+    return 0;
+}
+
 int main()
 {
     string mode;
     vector<Student> students;
-
+    
     while (true)
     {
         int menuChoice = getUserMenuChoice();
@@ -305,7 +322,7 @@ int main()
         {
             students.push_back(getUserStudentInput());
         }
-        else
+        else if (menuChoice == 2)
         {
             getModeChoice(mode);
             for (int i = 0; i < students.size(); i++)
@@ -314,6 +331,20 @@ int main()
             }
             printStudents(students, mode);
             return 0;
+        }
+        else
+        {
+            string fileName;
+            cout << "Enter file name in the following format: fileName.txt" << endl;
+            while(true){
+                cin >> fileName;
+                if (readFile(fileName) == 1){
+                    cout << "Input correct file name!" << endl;
+                    continue;
+                }
+                break;
+            }
+            readFile(fileName);
         }
     }
     return 0;
