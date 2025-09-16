@@ -381,6 +381,11 @@ Student processStudentRow(vector<string> studentRow)
     return student;
 }
 
+bool compareLastname(Student a, Student b)
+{
+    return a.firstName < b.firstName;
+}
+
 int main()
 {
     string mode;
@@ -434,6 +439,15 @@ int main()
             cout << "" << endl;
             cout << "Student data is uploaded to the system." << endl;
             cout << "" << endl;
+            sort(students.begin(), students.end(), compareLastname);
+            cout << "" << endl;
+            for (int i = 0; i < students.size(); i++)
+            {
+                students[i] = calcFinalGrade(students[i]);
+            }
+            printStudents(students, "b");
+            cout << "" << endl;
+
         }
     }
     return 0;
