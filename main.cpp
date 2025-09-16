@@ -6,6 +6,8 @@
 #include <limits>
 #include <random>
 #include <fstream>
+#include <sstream>
+#include <assert.h>
 
 // using namespace std;
 using std::cin;
@@ -14,6 +16,7 @@ using std::endl;
 using std::fixed;
 using std::ifstream;
 using std::invalid_argument;
+using std::istringstream;
 using std::left;
 using std::mt19937;
 using std::numeric_limits;
@@ -22,6 +25,7 @@ using std::setfill;
 using std::setprecision;
 using std::setw;
 using std::sort;
+using std::stod;
 using std::stof;
 using std::streamsize;
 using std::string;
@@ -137,7 +141,7 @@ void printStudents(vector<Student> &students, string mode)
 int getRandomGrade()
 {
     static mt19937 gen(random_device{}()); // seed once
-    static uniform_int_distribution<int> dist(2, 10);
+    static uniform_int_distribution<int> dist(1, 10);
     return dist(gen);
 }
 
@@ -158,8 +162,8 @@ Student getUserStudentInput()
 
     while (true)
     {
-
-        cout << "Enter " << student.firstName << " " << student.lastName << " homework grade (2-10) manually, type 'r' to generated random grade or type 'stop': ";
+        cout << "" << endl;
+        cout << "Enter " << student.firstName << " " << student.lastName << " homework grade (1-10) manually, type 'r' to generated random grade or type 'stop': ";
         cin >> userInput;
         if (userInput == stopWord)
         {
@@ -185,17 +189,18 @@ Student getUserStudentInput()
             }
         }
 
-        // check if grade is 2-10
-        if (temp_grade >= 2 && temp_grade <= 10)
+        // check if grade is 1-10
+        if (temp_grade >= 1 && temp_grade <= 10)
         {
             student.grades.push_back(temp_grade);
         }
         else
         {
-            cout << "Grade must be between 2 and 10." << endl;
+            cout << "Grade must be between 1 and 10." << endl;
         }
     }
 
+    cout << "" << endl;
     cout << "Input exam grade manually, or write 'r' to generated random grade: ";
     cin >> userInput;
     if (userInput == randomWord)
@@ -262,10 +267,12 @@ int getUserMenuChoice()
     while (true)
     {
         // TODO: user selects 2 without student data input
+        cout << "" << endl;
         cout << "Choose number from the menu:" << endl;
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
         cout << "3. Insert student data from a file" << endl;
+        cout << "" << endl;
         cin >> n;
         if (n == 1 || n == 2 || n == 3)
         {
@@ -279,10 +286,12 @@ int getUserMenuChoice()
 
 void getModeChoice(string &mode)
 {
-    cout << "How would you view the calclated final grade using:" << endl;
+    cout << "" << endl;
+    cout << "Would you like to view the calculated final grade with:" << endl;
     cout << "m = mean" << endl;
     cout << "md = median" << endl;
     cout << "b = both" << endl;
+    cout << "" << endl;
 
     while (true)
     {
@@ -296,7 +305,7 @@ void getModeChoice(string &mode)
     }
 }
 
-int readFile(string file)
+int checkFileAvailability(string file)
 {
     string fileText;
     ifstream f(file);
@@ -306,13 +315,70 @@ int readFile(string file)
         cout << "Error opening the file!" << endl;
         return 1;
     }
-    while (getline(f, fileText))
-    {
-        cout << fileText << endl;
-    }
 
     f.close();
     return 0;
+}
+
+vector<string> stripWhiteSpace(string &s)
+{
+    vector<string> result;
+    string tempStr;
+    for (int i = 0; i < s.size(); i++)
+    {
+        char currentChar = s[i];
+
+        if (currentChar != ' ')
+        {
+            tempStr = tempStr + s[i];
+
+            // make sure to push the last character
+            if (i == s.size() - 1)
+            {
+                result.push_back(tempStr);
+            }
+        }
+        else
+        {
+            if (tempStr == "")
+            {
+                continue;
+            }
+            result.push_back(tempStr);
+            tempStr = "";
+        }
+    }
+
+    return result;
+}
+
+Student processStudentRow(vector<string> studentRow)
+{
+
+    assert(!(studentRow.size() == 0));
+
+    Student student;
+    string firstname = studentRow[0];
+    string lastname = studentRow[1];
+
+    student.firstName = firstname;
+    student.lastName = lastname;
+
+    for (int i = 2; i < studentRow.size(); i++)
+    {
+        double tempGrade = stod(studentRow[i]);
+        if (i == studentRow.size() - 1)
+        {
+            student.exam = tempGrade;
+        }
+        else
+        {
+
+            student.grades.push_back(tempGrade);
+        }
+    }
+    // cout << "Student data is uploaded to the system." << endl;
+    return student;
 }
 
 int main()
@@ -344,12 +410,30 @@ int main()
             while (true)
             {
                 cin >> fileName;
-                if (readFile(fileName) == 0)
+                if (checkFileAvailability(fileName) == 0)
                 {
                     break;
                 }
                 cout << "Enter correct file name!" << endl;
             }
+
+            string curLine;
+            ifstream file(fileName);
+            getline(file, curLine); // skip header
+            while (getline(file, curLine))
+            {
+                if (curLine.length() == 0)
+                {
+                    continue;
+                }
+
+                vector<string> row = stripWhiteSpace(curLine);
+                Student student = processStudentRow(row);
+                students.push_back(student);
+            }
+            cout << "" << endl;
+            cout << "Student data is uploaded to the system." << endl;
+            cout << "" << endl;
         }
     }
     return 0;
