@@ -27,6 +27,8 @@ using std::setw;
 using std::sort;
 using std::stod;
 using std::stof;
+using std::stoi;
+
 using std::streamsize;
 using std::string;
 using std::uniform_int_distribution;
@@ -382,9 +384,63 @@ Student processStudentRow(vector<string> studentRow)
     return student;
 }
 
-bool compareLastname(Student a, Student b)
+string getNameCharacters(string name)
 {
-    return a.firstName < b.firstName;
+    string result = "";
+    string current;
+    for (int i = 0; i < name.length(); i++)
+    {
+        current = name[i];
+        try
+        {
+            stoi(current);
+        }
+        catch (invalid_argument err)
+        {
+            result = result + current;
+        }
+    }
+    return result;
+}
+
+int getNameNumbers(string name)
+{
+    string result = "";
+    string current;
+    for (int i = 0; i < name.length(); i++)
+    {
+        current = name[i];
+        try
+        {
+            stoi(current);
+            result = result + current;
+
+        }
+        catch (invalid_argument err)
+        {
+        }
+    }
+    cout << "resuuult" << result << endl;
+    try {
+    return stoi(result);
+
+    }         catch (invalid_argument err) {
+        return 0;
+    }
+
+}
+
+bool compareStudentCharacters(Student a, Student b)
+{
+    string aStr = getNameCharacters(a.firstName);
+    string bStr = getNameCharacters(b.firstName);
+    return aStr < bStr;
+}
+bool compareStudentNumbers(Student a, Student b)
+{
+    int aInt = getNameNumbers(a.firstName);
+    int bInt = getNameNumbers(b.firstName);
+    return aInt < bInt;
 }
 
 int main()
@@ -440,7 +496,9 @@ int main()
             cout << "" << endl;
             cout << "Student data is uploaded to the system." << endl;
             cout << "" << endl;
-            sort(students.begin(), students.end(), compareLastname);
+            sort(students.begin(), students.end(), compareStudentCharacters);
+            sort(students.begin(), students.end(), compareStudentNumbers);
+
             cout << "" << endl;
             for (int i = 0; i < students.size(); i++)
             {
