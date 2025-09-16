@@ -48,14 +48,14 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
     {
         // -- header --
         cout << left
-             << setw(wLastName) << "Last name"
              << setw(wFirsName) << "Name"
+             << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (mean)" << endl;
 
         // -- separator line --
         cout << setfill('-')
-             << setw(wLastName) << ""
              << setw(wFirsName) << ""
+             << setw(wLastName) << ""
              << setw(wGrade) << "" << endl
              << setfill(' ');
     }
@@ -63,14 +63,14 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
     {
         // -- header --
         cout << left
-             << setw(wLastName) << "Last name"
              << setw(wFirsName) << "Name"
+             << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (median)" << endl;
 
         // -- separator line --
         cout << setfill('-')
-             << setw(wLastName) << ""
              << setw(wFirsName) << ""
+             << setw(wLastName) << ""
              << setw(wGrade) << "" << endl
              << setfill(' ');
     }
@@ -78,15 +78,15 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
     {
         // -- header --
         cout << left
-             << setw(wLastName) << "Last name"
              << setw(wFirsName) << "Name"
+             << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (mean)"
              << setw(wGrade) << "Final grade (median)" << endl;
 
         // -- separator line --
         cout << setfill('-')
-             << setw(wLastName) << ""
              << setw(wFirsName) << ""
+             << setw(wLastName) << ""
              << setw(wGrade) << ""
              << setw(wGrade) << "" << endl
              << setfill(' ');
@@ -96,7 +96,7 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
 void printStudents(vector<Student> &students, string mode)
 {
     const int wLastName = 15;
-    const int wFirsName = 10;
+    const int wFirsName = 15;
     const int wGrade = 20;
     Student student;
 
@@ -109,8 +109,8 @@ void printStudents(vector<Student> &students, string mode)
 
             // -- student data --
             cout << left
-                 << setw(wLastName) << student.lastName
                  << setw(wFirsName) << student.firstName
+                 << setw(wLastName) << student.lastName
                  << fixed << setprecision(2)
                  << setw(wGrade) << student.finalGradeMean << endl;
         }
@@ -119,8 +119,8 @@ void printStudents(vector<Student> &students, string mode)
 
             // -- student data --
             cout << left
-                 << setw(wLastName) << student.lastName
                  << setw(wFirsName) << student.firstName
+                 << setw(wLastName) << student.lastName
                  << fixed << setprecision(2)
                  << setw(wGrade) << student.finalGradeMedian << endl;
         }
@@ -129,8 +129,8 @@ void printStudents(vector<Student> &students, string mode)
 
             // -- student data --
             cout << left
-                 << setw(wLastName) << student.lastName
                  << setw(wFirsName) << student.firstName
+                 << setw(wLastName) << student.lastName
                  << fixed << setprecision(2)
                  << setw(wGrade) << student.finalGradeMean
                  << setw(wGrade) << student.finalGradeMedian << endl;
@@ -361,6 +361,7 @@ Student processStudentRow(vector<string> studentRow)
     string firstname = studentRow[0];
     string lastname = studentRow[1];
 
+    cout << "f: " << firstname << endl;
     student.firstName = firstname;
     student.lastName = lastname;
 
@@ -447,7 +448,6 @@ int main()
             }
             printStudents(students, "b");
             cout << "" << endl;
-
         }
     }
     return 0;
