@@ -40,6 +40,7 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
 {
     if (mode == "m")
     {
+        // -- header --
         cout << left
              << setw(wLastName) << "Last name"
              << setw(wFirsName) << "Name"
@@ -131,14 +132,11 @@ void printStudents(vector<Student> &students, string mode)
     }
 }
 
-int getRandomGrade(int min, int max)
+int getRandomGrade()
 {
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> dist(2, 10);
-
-    int randomGrade = dist(gen);
-    return randomGrade;
+    static mt19937 gen(random_device{}()); // seed once
+    static uniform_int_distribution<int> dist(2, 10);
+    return dist(gen);
 }
 
 Student getUserStudentInput()
@@ -155,12 +153,11 @@ Student getUserStudentInput()
     cin >> student.firstName;
     cout << "Last name: ";
     cin >> student.lastName;
-    cout << "Enter " << student.firstName << "'s " << student.lastName << " homework grade (2-10), one at the time." << endl;
 
     while (true)
     {
 
-        cout << "Input grade or type 'stop': ";
+        cout << "Enter " << student.firstName << " " << student.lastName << " homework grade (2-10) manually, type 'r' to generated random grade or type 'stop': ";
         cin >> userInput;
         if (userInput == stopWord)
         {
@@ -169,16 +166,15 @@ Student getUserStudentInput()
 
         if (userInput == randomWord)
         {
-            temp_grade = getRandomGrade(2, 10);
-            cout << "Random grade is:" << temp_grade << endl;
+            temp_grade = getRandomGrade();
+            cout << "Random grade is: " << temp_grade << endl;
         }
         else
         {
             // check if input contains number
-            // TODO: allows 2k5 -> 2. maybe we need to fix
             try
             {
-                temp_grade = stof(userInput);
+                temp_grade = stof(userInput); // TODO: allows inputs like 2k5 -> rezult: 2
             }
             catch (invalid_argument err)
             {
@@ -202,7 +198,7 @@ Student getUserStudentInput()
     cin >> userInput;
     if (userInput == randomWord)
     {
-        temp_grade = getRandomGrade(2, 10);
+        temp_grade = getRandomGrade();
         cout << "Random exam grade is: " << temp_grade << endl;
     }
     else
@@ -218,7 +214,7 @@ double hwMean(vector<double> grades)
 {
     if (grades.empty())
     {
-        return 0.00;
+        return 0.0;
     }
 
     double sum = 0.0;
@@ -231,7 +227,7 @@ double hwMedian(vector<double> grades)
 {
     if (grades.empty())
     {
-        return 0.00;
+        return 0.0;
     }
 
     sort(grades.begin(), grades.end());
