@@ -301,11 +301,16 @@ int readFile(string file)
     string fileText;
     ifstream f(file);
 
-    if (!f.is_open()){
+    if (!f.is_open())
+    {
         cout << "Error opening the file!" << endl;
         return 1;
     }
-    cout << fileText << endl;
+    while (getline(f, fileText))
+    {
+        cout << fileText << endl;
+    }
+
     f.close();
     return 0;
 }
@@ -314,7 +319,7 @@ int main()
 {
     string mode;
     vector<Student> students;
-    
+
     while (true)
     {
         int menuChoice = getUserMenuChoice();
@@ -336,15 +341,15 @@ int main()
         {
             string fileName;
             cout << "Enter file name in the following format: fileName.txt" << endl;
-            while(true){
+            while (true)
+            {
                 cin >> fileName;
-                if (readFile(fileName) == 1){
-                    cout << "Input correct file name!" << endl;
-                    continue;
+                if (readFile(fileName) == 0)
+                {
+                    break;
                 }
-                break;
+                cout << "Enter correct file name!" << endl;
             }
-            readFile(fileName);
         }
     }
     return 0;
