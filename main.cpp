@@ -6,8 +6,9 @@
 #include <limits>
 #include <random>
 #include <fstream>
-#include <sstream>
-#include <assert.h>
+#include <cassert>
+#include <cctype>
+
 
 // using namespace std;
 using std::cin;
@@ -16,7 +17,6 @@ using std::endl;
 using std::fixed;
 using std::ifstream;
 using std::invalid_argument;
-using std::istringstream;
 using std::left;
 using std::mt19937;
 using std::numeric_limits;
@@ -28,7 +28,7 @@ using std::sort;
 using std::stod;
 using std::stof;
 using std::stoi;
-
+using std::isdigit;
 using std::streamsize;
 using std::string;
 using std::uniform_int_distribution;
@@ -387,16 +387,11 @@ Student processStudentRow(vector<string> studentRow)
 string getNameCharacters(string name)
 {
     string result = "";
-    string current;
+    char current;
     for (int i = 0; i < name.length(); i++)
     {
         current = name[i];
-        try
-        {
-            stoi(current);
-        }
-        catch (invalid_argument err)
-        {
+        if (!isdigit(current)) {
             result = result + current;
         }
     }
@@ -406,28 +401,15 @@ string getNameCharacters(string name)
 int getNameNumbers(string name)
 {
     string result = "";
-    string current;
+    char current;
     for (int i = 0; i < name.length(); i++)
     {
         current = name[i];
-        try
-        {
-            stoi(current);
+        if (isdigit(current)) {
             result = result + current;
-
-        }
-        catch (invalid_argument err)
-        {
         }
     }
-    cout << "resuuult" << result << endl;
-    try {
     return stoi(result);
-
-    }         catch (invalid_argument err) {
-        return 0;
-    }
-
 }
 
 bool compareStudentCharacters(Student a, Student b)
