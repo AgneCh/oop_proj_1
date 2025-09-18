@@ -288,7 +288,6 @@ int getUserMenuChoice()
 
     while (true)
     {
-        // TODO: user selects 2 without student data input
         cout << "" << endl;
         cout << "Choose number from the menu:" << endl;
         cout << "1. Add new student" << endl;
@@ -461,6 +460,10 @@ int main()
         }
         else if (menuChoice == 2)
         {
+            if(students.size() == 0){
+                cout << "No student data found in the system!" << endl;
+                continue;
+            }
             getModeChoice(mode);
             for (int i = 0; i < students.size(); i++)
             {
