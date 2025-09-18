@@ -9,7 +9,6 @@
 #include <cassert>
 #include <cctype>
 
-
 // using namespace std;
 using std::cin;
 using std::cout;
@@ -17,6 +16,7 @@ using std::endl;
 using std::fixed;
 using std::ifstream;
 using std::invalid_argument;
+using std::isdigit;
 using std::left;
 using std::mt19937;
 using std::numeric_limits;
@@ -28,7 +28,6 @@ using std::sort;
 using std::stod;
 using std::stof;
 using std::stoi;
-using std::isdigit;
 using std::streamsize;
 using std::string;
 using std::uniform_int_distribution;
@@ -202,19 +201,40 @@ Student getUserStudentInput()
         }
     }
 
-    cout << "" << endl;
-    cout << "Input exam grade manually, or write 'r' to generated random grade: ";
-    cin >> userInput;
-    if (userInput == randomWord)
+    while (true)
     {
-        temp_grade = getRandomGrade();
-        cout << "Random exam grade is: " << temp_grade << endl;
+        cout << "" << endl;
+        cout << "Input exam grade manually, or write 'r' to generated random grade: ";
+        cin >> userInput;
+        if (userInput == randomWord)
+        {
+            temp_grade = getRandomGrade();
+            cout << "Random exam grade is: " << temp_grade << endl;
+            break;
+        }
+        else
+        {
+            try
+            {
+
+                temp_grade = stof(userInput);
+            }
+            catch (invalid_argument err)
+            {
+                cout << "Invalid input!" << endl;
+                continue;
+            }
+            if (temp_grade >= 1 && temp_grade <= 10)
+            {
+                student.exam = temp_grade;
+                break;
+            }
+            else
+            {
+                cout << "Grade must be between 1 and 10." << endl;
+            }
+        }
     }
-    else
-    {
-        temp_grade = stof(userInput);
-    }
-    student.exam = temp_grade;
 
     return student;
 }
@@ -391,7 +411,8 @@ string getNameCharacters(string name)
     for (int i = 0; i < name.length(); i++)
     {
         current = name[i];
-        if (!isdigit(current)) {
+        if (!isdigit(current))
+        {
             result = result + current;
         }
     }
@@ -405,7 +426,8 @@ int getNameNumbers(string name)
     for (int i = 0; i < name.length(); i++)
     {
         current = name[i];
-        if (isdigit(current)) {
+        if (isdigit(current))
+        {
             result = result + current;
         }
     }
