@@ -37,8 +37,8 @@ struct Student
 {
     string firstName;
     string lastName;
-    vector<double> grades;
-    double exam;
+    vector<int> grades;
+    int exam;
     double finalGradeMean;
     double finalGradeMedian;
 };
@@ -178,10 +178,16 @@ Student getUserStudentInput()
         }
         else
         {
-            // check if input contains number
+            // check if input contains a digit
+            size_t parsed = 0;
             try
             {
-                temp_grade = stof(userInput); // TODO: allows inputs like 2k5 -> rezult: 2
+                temp_grade = stoi(userInput, &parsed);
+                if (parsed != userInput.size())
+                {
+                    cout << "Invalid input!" << endl;
+                    continue;
+                }
             }
             catch (invalid_argument err)
             {
@@ -214,10 +220,16 @@ Student getUserStudentInput()
         }
         else
         {
+            size_t parsed = 0;
             try
             {
 
-                temp_grade = stof(userInput);
+                temp_grade = stoi(userInput, &parsed);
+                if (parsed != userInput.size())
+                {
+                    cout << "Invalid input!" << endl;
+                    continue;
+                }
             }
             catch (invalid_argument err)
             {
@@ -239,7 +251,7 @@ Student getUserStudentInput()
     return student;
 }
 
-double hwMean(vector<double> grades)
+double hwMean(vector<int> grades)
 {
     if (grades.empty())
     {
@@ -252,7 +264,7 @@ double hwMean(vector<double> grades)
     return sum / grades.size();
 }
 
-double hwMedian(vector<double> grades)
+double hwMedian(vector<int> grades)
 {
     if (grades.empty())
     {
@@ -289,7 +301,7 @@ int getUserMenuChoice()
     while (true)
     {
         cout << "" << endl;
-        cout << "Choose number from the menu:" << endl;
+        cout << "Choose a number from the menu:" << endl;
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
         cout << "3. Insert student data from a file" << endl;
@@ -388,7 +400,7 @@ Student processStudentRow(vector<string> studentRow)
 
     for (int i = 2; i < studentRow.size(); i++)
     {
-        double tempGrade = stod(studentRow[i]);
+        double tempGrade = stoi(studentRow[i]);
         if (i == studentRow.size() - 1)
         {
             student.exam = tempGrade;
@@ -460,7 +472,8 @@ int main()
         }
         else if (menuChoice == 2)
         {
-            if(students.size() == 0){
+            if (students.size() == 0)
+            {
                 cout << "No student data found in the system!" << endl;
                 continue;
             }
