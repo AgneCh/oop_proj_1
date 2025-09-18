@@ -305,9 +305,10 @@ int getUserMenuChoice()
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
         cout << "3. Insert student data from a file" << endl;
+        cout << "4. Exit" << endl;
         cout << "" << endl;
         cin >> n;
-        if (n == 1 || n == 2 || n == 3)
+        if (n == 1 || n == 2 || n == 3 || n == 4)
         {
             return n;
         }
@@ -489,9 +490,8 @@ int main()
                 students[i] = calcFinalGrade(students[i]);
             }
             printStudents(students, mode);
-            // return 0;
         }
-        else
+        else if (menuChoice == 3)
         {
             string fileName;
             cout << "Enter file name in the following format: fileName.txt" << endl;
@@ -532,6 +532,10 @@ int main()
             }
             printStudents(students, "b");
             cout << "" << endl;
+        }
+        else
+        {
+            break;
         }
     }
     return 0;
