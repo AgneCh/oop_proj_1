@@ -394,7 +394,6 @@ Student processStudentRow(vector<string> studentRow)
     string firstname = studentRow[0];
     string lastname = studentRow[1];
 
-    cout << "f: " << firstname << endl;
     student.firstName = firstname;
     student.lastName = lastname;
 
@@ -411,7 +410,7 @@ Student processStudentRow(vector<string> studentRow)
             student.grades.push_back(tempGrade);
         }
     }
-    // cout << "Student data is uploaded to the system." << endl;
+
     return student;
 }
 
@@ -442,7 +441,14 @@ int getNameNumbers(string name)
             result = result + current;
         }
     }
-    return stoi(result);
+    if (result.size() != 0)
+    {
+        return stoi(result);
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 bool compareStudentCharacters(Student a, Student b)
@@ -483,7 +489,7 @@ int main()
                 students[i] = calcFinalGrade(students[i]);
             }
             printStudents(students, mode);
-            return 0;
+            // return 0;
         }
         else
         {
