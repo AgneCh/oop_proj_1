@@ -487,15 +487,35 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     {
         f << left << setw(15) << "Name" + to_string(i + 1)
           << setw(15) << "Surname" + to_string(i + 1);
-        
-        for (int j = 0; j < 5; ++j){
+
+        for (int j = 0; j < 5; ++j)
+        {
             f << setw(5) << getRandomGrade();
         }
         f << setw(5) << getRandomGrade() << endl;
     }
 
     f.close();
-    cout << " File " << fileName << " is successfully created." << endl;
+    cout << endl;
+    cout << "File " << fileName << " is successfully created." << endl;
+}
+
+void loadStudentsFromFile(vector<Student> &out, string fileName)
+{
+    string curLine;
+    ifstream file(fileName);
+    getline(file, curLine); // skip header
+    while (getline(file, curLine))
+    {
+        if (curLine.length() == 0)
+        {
+            continue;
+        }
+
+        vector<string> row = stripWhiteSpace(curLine);
+        Student student = processStudentRow(row);
+        out.push_back(student);
+    }
 }
 
 int main()
@@ -538,20 +558,7 @@ int main()
                 cout << "Enter correct file name!" << endl;
             }
 
-            string curLine;
-            ifstream file(fileName);
-            getline(file, curLine); // skip header
-            while (getline(file, curLine))
-            {
-                if (curLine.length() == 0)
-                {
-                    continue;
-                }
-
-                vector<string> row = stripWhiteSpace(curLine);
-                Student student = processStudentRow(row);
-                students.push_back(student);
-            }
+            loadStudentsFromFile(students, fileName);
             cout << "" << endl;
             cout << "Student data is uploaded to the system." << endl;
             cout << "" << endl;
@@ -570,12 +577,45 @@ int main()
         {
             int fileLenght;
             string fileName;
+            string usrInput;
+            while (true)
+            {
+                cout << "How many student records would you like to generate? ";
+                cin >> usrInput;
 
-            cout << "How many student records would you like to generate? ";
-            cin >> fileLenght;
+                size_t parsed = 0;
+
+                try
+                {
+                    fileLenght = stoi(usrInput, &parsed);
+                    if (parsed != usrInput.size())
+                    {
+                        cout << "Invalid input!" << endl;
+                        continue;
+                    }
+                    break;
+                }
+                catch (invalid_argument err)
+                {
+                    cout << "Invalid input!" << endl;
+                    continue;
+                }
+            }
 
             fileName = "Student" + to_string(fileLenght) + ".txt";
             generateRandomStudentFile(fileName, fileLenght);
+
+            loadStudentsFromFile(students, fileName);
+            cout << "" << endl;
+            cout << "Student data is uploaded to the system." << endl;
+            cout << "" << endl;
+
+            for (int i = 0; i < students.size(); i++)
+            {
+                students[i] = calcFinalGrade(students[i]);
+            }
+            printStudents(students, "m");
+            cout << "" << endl;
         }
         else
         {
