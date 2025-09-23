@@ -542,8 +542,6 @@ int main()
 {
     string mode;
     vector<Student> students;
-    vector<Student> strugglers;
-    vector<Student> highAchievers;
 
     while (true)
     {
@@ -597,6 +595,10 @@ int main()
         }
         else if (menuChoice == 4)
         {
+            vector<Student> studentData;
+            vector<Student> strugglers;
+            vector<Student> highAchievers;
+
             int fileLenght;
             string fileName;
             string usrInput;
@@ -627,17 +629,17 @@ int main()
             fileName = "Student" + to_string(fileLenght) + ".txt";
             generateRandomStudentFile(fileName, fileLenght);
 
-            loadStudentsFromFile(students, fileName);
+            loadStudentsFromFile(studentData, fileName);
             cout << "" << endl;
             cout << "Student data is uploaded to the system." << endl;
             cout << "" << endl;
 
-            for (int i = 0; i < students.size(); i++)
+            for (int i = 0; i < studentData.size(); i++)
             {
-                students[i] = calcFinalGrade(students[i]);
+                studentData[i] = calcFinalGrade(studentData[i]);
             }
 
-            categorizeStudents(students, strugglers, highAchievers);
+            categorizeStudents(studentData, strugglers, highAchievers);
             printStudents(strugglers, "m");
             cout << "" << endl;
             printStudents(highAchievers, "m");
