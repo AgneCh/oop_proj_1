@@ -31,9 +31,9 @@ using std::stof;
 using std::stoi;
 using std::streamsize;
 using std::string;
+using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
-using std::to_string;
 
 struct Student
 {
@@ -480,10 +480,22 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     // create header
     f << left << setw(15) << "Name" << setw(15) << "Surname";
     for (int i = 0; i < 5; ++i)
-        f << setw(5) << "HM" + to_string(i+1);
+        f << setw(5) << "HM" + to_string(i + 1);
     f << setw(5) << "Exam" << endl;
 
+    for (int i = 0; i < numOfLines; ++i)
+    {
+        f << left << setw(15) << "Name" + to_string(i + 1)
+          << setw(15) << "Surname" + to_string(i + 1);
+        
+        for (int j = 0; j < 5; ++j){
+            f << setw(5) << getRandomGrade();
+        }
+        f << setw(5) << getRandomGrade() << endl;
+    }
+
     f.close();
+    cout << " File " << fileName << " is successfully created." << endl;
 }
 
 int main()
@@ -559,11 +571,11 @@ int main()
             int fileLenght;
             string fileName;
 
-            cout << "How many student records would youlike to generate? ";
+            cout << "How many student records would you like to generate? ";
             cin >> fileLenght;
 
             fileName = "Student" + to_string(fileLenght) + ".txt";
-            generateRandomStudentFile(fileName,fileLenght);
+            generateRandomStudentFile(fileName, fileLenght);
         }
         else
         {
