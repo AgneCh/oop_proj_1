@@ -20,6 +20,7 @@ using std::isdigit;
 using std::left;
 using std::mt19937;
 using std::numeric_limits;
+using std::ofstream;
 using std::random_device;
 using std::setfill;
 using std::setprecision;
@@ -32,6 +33,7 @@ using std::streamsize;
 using std::string;
 using std::uniform_int_distribution;
 using std::vector;
+using std::to_string;
 
 struct Student
 {
@@ -305,7 +307,8 @@ int getUserMenuChoice()
         cout << "1. Add new student" << endl;
         cout << "2. Calculate grades" << endl;
         cout << "3. Insert student data from a file" << endl;
-        cout << "4. Exit" << endl;
+        cout << "4. Generate random student file" << endl;
+        cout << "5. Exit" << endl;
         cout << "" << endl;
         cin >> n;
         if (n == 1 || n == 2 || n == 3 || n == 4)
@@ -465,6 +468,24 @@ bool compareStudentNumbers(Student a, Student b)
     return aInt < bInt;
 }
 
+void generateRandomStudentFile(string fileName, int numOfLines)
+{
+    ofstream f(fileName);
+    if (!f.is_open())
+    {
+        cout << "Error creating file!" << fileName << endl;
+        return;
+    }
+
+    // create header
+    f << left << setw(15) << "Name" << setw(15) << "Surname";
+    for (int i = 0; i < 5; ++i)
+        f << setw(5) << "HM" + to_string(i+1);
+    f << setw(5) << "Exam" << endl;
+
+    f.close();
+}
+
 int main()
 {
     string mode;
@@ -532,6 +553,17 @@ int main()
             }
             printStudents(students, "b");
             cout << "" << endl;
+        }
+        else if (menuChoice == 4)
+        {
+            int fileLenght;
+            string fileName;
+
+            cout << "How many student records would youlike to generate? ";
+            cin >> fileLenght;
+
+            fileName = "Student" + to_string(fileLenght) + ".txt";
+            generateRandomStudentFile(fileName,fileLenght);
         }
         else
         {
