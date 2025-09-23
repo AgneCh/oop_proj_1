@@ -500,7 +500,7 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     cout << "File " << fileName << " is successfully created." << endl;
 }
 
-void loadStudentsFromFile(vector<Student> &out, string fileName)
+void loadStudentsFromFile(vector<Student> &students, string fileName)
 {
     string curLine;
     ifstream file(fileName);
@@ -514,7 +514,27 @@ void loadStudentsFromFile(vector<Student> &out, string fileName)
 
         vector<string> row = stripWhiteSpace(curLine);
         Student student = processStudentRow(row);
-        out.push_back(student);
+        students.push_back(student);
+    }
+}
+
+void categorizeStudents(vector<Student> &allStudents, vector<Student> &belowFive, vector<Student> &fiveAndUp)
+{
+    double threshold = 5.0;
+
+    belowFive.clear();
+    fiveAndUp.clear();
+
+    for (const auto &s : allStudents)
+    {
+        if (s.finalGradeMean < threshold)
+        {
+            belowFive.push_back(s);
+        }
+        else
+        {
+            fiveAndUp.push_back(s);
+        }
     }
 }
 
@@ -522,6 +542,8 @@ int main()
 {
     string mode;
     vector<Student> students;
+    vector<Student> strugglers;
+    vector<Student> highAchievers;
 
     while (true)
     {
@@ -614,8 +636,11 @@ int main()
             {
                 students[i] = calcFinalGrade(students[i]);
             }
-            printStudents(students, "m");
+
+            categorizeStudents(students, strugglers, highAchievers);
+            printStudents(strugglers, "m");
             cout << "" << endl;
+            printStudents(highAchievers, "m");
         }
         else
         {
