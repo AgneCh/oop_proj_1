@@ -34,6 +34,7 @@ using std::string;
 using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
+using std::ostringstream;
 
 struct Student
 {
@@ -45,18 +46,19 @@ struct Student
     double finalGradeMedian;
 };
 
-void printHeader(const int wLastName, const int wFirsName, const int wGrade, string mode)
+string createHeader(const int wLastName, const int wFirsName, const int wGrade, string mode)
 {
+    ostringstream header;
     if (mode == "m")
     {
         // -- header --
-        cout << left
+        header << left
              << setw(wFirsName) << "Name"
              << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (mean)" << endl;
 
         // -- separator line --
-        cout << setfill('-')
+        header << setfill('-')
              << setw(wFirsName) << ""
              << setw(wLastName) << ""
              << setw(wGrade) << "" << endl
@@ -65,13 +67,13 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
     else if (mode == "md")
     {
         // -- header --
-        cout << left
+        header << left
              << setw(wFirsName) << "Name"
              << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (median)" << endl;
 
         // -- separator line --
-        cout << setfill('-')
+        header << setfill('-')
              << setw(wFirsName) << ""
              << setw(wLastName) << ""
              << setw(wGrade) << "" << endl
@@ -80,20 +82,21 @@ void printHeader(const int wLastName, const int wFirsName, const int wGrade, str
     else
     {
         // -- header --
-        cout << left
+        header << left
              << setw(wFirsName) << "Name"
              << setw(wLastName) << "Last name"
              << setw(wGrade) << "Final grade (mean)"
              << setw(wGrade) << "Final grade (median)" << endl;
 
         // -- separator line --
-        cout << setfill('-')
+        header << setfill('-')
              << setw(wFirsName) << ""
              << setw(wLastName) << ""
              << setw(wGrade) << ""
              << setw(wGrade) << "" << endl
              << setfill(' ');
     }
+    return header.str();
 }
 
 void printStudents(vector<Student> &students, string mode)
@@ -103,7 +106,7 @@ void printStudents(vector<Student> &students, string mode)
     const int wGrade = 20;
     Student student;
 
-    printHeader(wLastName, wFirsName, wGrade, mode);
+    cout << createHeader(wLastName, wFirsName, wGrade, mode);
     for (int i = 0; i < students.size(); i++)
     {
         student = students[i];
@@ -537,6 +540,10 @@ void categorizeStudents(vector<Student> &allStudents, vector<Student> &belowFive
         }
     }
 }
+
+// void createStudentFile(vector<Student> &studentList){
+
+// }
 
 int main()
 {
