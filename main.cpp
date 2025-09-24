@@ -35,6 +35,7 @@ using std::string;
 using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
+using std::round;
 
 struct Student
 {
@@ -46,9 +47,13 @@ struct Student
     double finalGradeMedian;
 };
 
-string createHeader(const int wLastName, const int wFirsName, const int wGrade, string mode)
+string createHeader(string mode)
 {
     ostringstream header;
+    const int wLastName = 15;
+    const int wFirsName = 15;
+    const int wGrade = 20;
+
     if (mode == "m")
     {
         // -- header --
@@ -98,9 +103,12 @@ string createHeader(const int wLastName, const int wFirsName, const int wGrade, 
     return header.str();
 }
 
-string formatStudentRow(const Student &student, const int wLastName, const int wFirsName, const int wGrade, string mode)
+string formatStudentRow(const Student &student, string mode)
 {
     ostringstream studentRow;
+    const int wLastName = 15;
+    const int wFirsName = 15;
+    const int wGrade = 20;
 
     if (mode == "m")
     {
@@ -139,16 +147,14 @@ string formatStudentRow(const Student &student, const int wLastName, const int w
 
 void printStudents(vector<Student> &students, string mode)
 {
-    const int wLastName = 15;
-    const int wFirsName = 15;
-    const int wGrade = 20;
+
     Student student;
 
-    cout << createHeader(wLastName, wFirsName, wGrade, mode);
+    cout << createHeader(mode);
     for (int i = 0; i < students.size(); i++)
     {
         student = students[i];
-        cout << formatStudentRow(student, wLastName, wFirsName, wGrade, mode);
+        cout << formatStudentRow(student, mode);
     }
 }
 
@@ -538,7 +544,8 @@ void categorizeStudents(vector<Student> &allStudents, vector<Student> &belowFive
 
     for (const auto &s : allStudents)
     {
-        if (s.finalGradeMean < threshold)
+        double roundedGrade = round(s.finalGradeMean);
+        if (roundedGrade < threshold)
         {
             belowFive.push_back(s);
         }
@@ -549,9 +556,26 @@ void categorizeStudents(vector<Student> &allStudents, vector<Student> &belowFive
     }
 }
 
-// void createStudentFile(vector<Student> &studentList){
+void createStudentFile(vector<Student> &studentList, string fileName)
+{
+    Student student;
+    ofstream f(fileName);
+    if (!f.is_open())
+    {
+        cout << "Error creating file!" << fileName << "\n";
+        return;
+    }
 
-// }
+    f << createHeader("m");
+    for (int i = 0; i < studentList.size(); i++)
+    {
+        student = studentList[i];
+        f << formatStudentRow(student, "m");
+    }
+    f.close();
+    cout << "\n";
+    cout << "File " << fileName << " is successfully created." << "\n";
+}
 
 int main()
 {
@@ -569,7 +593,7 @@ int main()
         {
             if (students.size() == 0)
             {
-                cout << "No student data found in the system!" << endl;
+                cout << "No student data found in the system!" << "\n";
                 continue;
             }
             getModeChoice(mode);
@@ -582,7 +606,7 @@ int main()
         else if (menuChoice == 3)
         {
             string fileName;
-            cout << "Enter file name in the following format: fileName.txt" << endl;
+            cout << "Enter file name in the following format: fileName.txt" << "\n";
             while (true)
             {
                 cin >> fileName;
@@ -590,23 +614,23 @@ int main()
                 {
                     break;
                 }
-                cout << "Enter correct file name!" << endl;
+                cout << "Enter correct file name!" << "\n";
             }
 
             loadStudentsFromFile(students, fileName);
-            cout << "" << endl;
-            cout << "Student data is uploaded to the system." << endl;
-            cout << "" << endl;
+            cout << "\n";
+            cout << "Student data is uploaded to the system." << "\n";
+            cout << "\n";
             sort(students.begin(), students.end(), compareStudentCharacters);
             sort(students.begin(), students.end(), compareStudentNumbers);
 
-            cout << "" << endl;
+            cout << "\n";
             for (int i = 0; i < students.size(); i++)
             {
                 students[i] = calcFinalGrade(students[i]);
             }
             printStudents(students, "b");
-            cout << "" << endl;
+            cout << "\n";
         }
         else if (menuChoice == 4)
         {
@@ -629,14 +653,14 @@ int main()
                     fileLenght = stoi(usrInput, &parsed);
                     if (parsed != usrInput.size())
                     {
-                        cout << "Invalid input!" << endl;
+                        cout << "Invalid input!" << "\n";
                         continue;
                     }
                     break;
                 }
                 catch (invalid_argument err)
                 {
-                    cout << "Invalid input!" << endl;
+                    cout << "Invalid input!" << "\n";
                     continue;
                 }
             }
@@ -645,9 +669,9 @@ int main()
             generateRandomStudentFile(fileName, fileLenght);
 
             loadStudentsFromFile(studentData, fileName);
-            cout << "" << endl;
-            cout << "Student data is uploaded to the system." << endl;
-            cout << "" << endl;
+            cout << "\n";
+            cout << "Student data is uploaded to the system." << "\n";
+            cout << "\n";
 
             for (int i = 0; i < studentData.size(); i++)
             {
@@ -655,9 +679,10 @@ int main()
             }
 
             categorizeStudents(studentData, strugglers, highAchievers);
-            printStudents(strugglers, "m");
-            cout << "" << endl;
-            printStudents(highAchievers, "m");
+            createStudentFile(strugglers, "strugglers.txt");
+            createStudentFile(highAchievers, "highAchievers.txt");
+            cout << "\n";
+
         }
         else
         {

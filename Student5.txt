@@ -1,6 +1,0 @@
-Name           Surname        HM1  HM2  HM3  HM4  HM5  Exam 
-Name1          Surname1       7    9    9    1    8    10   
-Name2          Surname2       7    6    8    6    5    6    
-Name3          Surname3       4    4    7    3    2    4    
-Name4          Surname4       2    8    5    10   6    10   
-Name5          Surname5       3    1    9    3    5    6    
