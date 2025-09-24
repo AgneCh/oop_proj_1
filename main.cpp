@@ -21,6 +21,7 @@ using std::left;
 using std::mt19937;
 using std::numeric_limits;
 using std::ofstream;
+using std::ostringstream;
 using std::random_device;
 using std::setfill;
 using std::setprecision;
@@ -34,7 +35,6 @@ using std::string;
 using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
-using std::ostringstream;
 
 struct Student
 {
@@ -53,50 +53,88 @@ string createHeader(const int wLastName, const int wFirsName, const int wGrade, 
     {
         // -- header --
         header << left
-             << setw(wFirsName) << "Name"
-             << setw(wLastName) << "Last name"
-             << setw(wGrade) << "Final grade (mean)" << endl;
-
+               << setw(wFirsName) << "Name"
+               << setw(wLastName) << "Last name"
+               << setw(wGrade) << "Final grade (mean)" << '\n';
         // -- separator line --
         header << setfill('-')
-             << setw(wFirsName) << ""
-             << setw(wLastName) << ""
-             << setw(wGrade) << "" << endl
-             << setfill(' ');
+               << setw(wFirsName) << ""
+               << setw(wLastName) << ""
+               << setw(wGrade) << "" << '\n'
+               << setfill(' ');
     }
     else if (mode == "md")
     {
         // -- header --
         header << left
-             << setw(wFirsName) << "Name"
-             << setw(wLastName) << "Last name"
-             << setw(wGrade) << "Final grade (median)" << endl;
+               << setw(wFirsName) << "Name"
+               << setw(wLastName) << "Last name"
+               << setw(wGrade) << "Final grade (median)" << '\n';
 
         // -- separator line --
         header << setfill('-')
-             << setw(wFirsName) << ""
-             << setw(wLastName) << ""
-             << setw(wGrade) << "" << endl
-             << setfill(' ');
+               << setw(wFirsName) << ""
+               << setw(wLastName) << ""
+               << setw(wGrade) << "" << '\n'
+               << setfill(' ');
     }
     else
     {
         // -- header --
         header << left
-             << setw(wFirsName) << "Name"
-             << setw(wLastName) << "Last name"
-             << setw(wGrade) << "Final grade (mean)"
-             << setw(wGrade) << "Final grade (median)" << endl;
+               << setw(wFirsName) << "Name"
+               << setw(wLastName) << "Last name"
+               << setw(wGrade) << "Final grade (mean)"
+               << setw(wGrade) << "Final grade (median)" << '\n';
 
         // -- separator line --
         header << setfill('-')
-             << setw(wFirsName) << ""
-             << setw(wLastName) << ""
-             << setw(wGrade) << ""
-             << setw(wGrade) << "" << endl
-             << setfill(' ');
+               << setw(wFirsName) << ""
+               << setw(wLastName) << ""
+               << setw(wGrade) << ""
+               << setw(wGrade) << "" << '\n'
+               << setfill(' ');
     }
     return header.str();
+}
+
+string formatStudentRow(const Student &student, const int wLastName, const int wFirsName, const int wGrade, string mode)
+{
+    ostringstream studentRow;
+
+    if (mode == "m")
+    {
+
+        // -- student data --
+        studentRow << left
+                   << setw(wFirsName) << student.firstName
+                   << setw(wLastName) << student.lastName
+                   << fixed << setprecision(2)
+                   << setw(wGrade) << student.finalGradeMean << '\n';
+    }
+    else if (mode == "md")
+    {
+
+        // -- student data --
+        studentRow << left
+                   << setw(wFirsName) << student.firstName
+                   << setw(wLastName) << student.lastName
+                   << fixed << setprecision(2)
+                   << setw(wGrade) << student.finalGradeMedian << '\n';
+    }
+    else
+    {
+
+        // -- student data --
+        studentRow << left
+                   << setw(wFirsName) << student.firstName
+                   << setw(wLastName) << student.lastName
+                   << fixed << setprecision(2)
+                   << setw(wGrade) << student.finalGradeMean
+                   << setw(wGrade) << student.finalGradeMedian << '\n';
+    }
+
+    return studentRow.str();
 }
 
 void printStudents(vector<Student> &students, string mode)
@@ -110,37 +148,7 @@ void printStudents(vector<Student> &students, string mode)
     for (int i = 0; i < students.size(); i++)
     {
         student = students[i];
-        if (mode == "m")
-        {
-
-            // -- student data --
-            cout << left
-                 << setw(wFirsName) << student.firstName
-                 << setw(wLastName) << student.lastName
-                 << fixed << setprecision(2)
-                 << setw(wGrade) << student.finalGradeMean << endl;
-        }
-        else if (mode == "md")
-        {
-
-            // -- student data --
-            cout << left
-                 << setw(wFirsName) << student.firstName
-                 << setw(wLastName) << student.lastName
-                 << fixed << setprecision(2)
-                 << setw(wGrade) << student.finalGradeMedian << endl;
-        }
-        else
-        {
-
-            // -- student data --
-            cout << left
-                 << setw(wFirsName) << student.firstName
-                 << setw(wLastName) << student.lastName
-                 << fixed << setprecision(2)
-                 << setw(wGrade) << student.finalGradeMean
-                 << setw(wGrade) << student.finalGradeMedian << endl;
-        }
+        cout << formatStudentRow(student, wLastName, wFirsName, wGrade, mode);
     }
 }
 
@@ -217,11 +225,11 @@ Student getUserStudentInput()
         cout << "" << endl;
         cout << "Input exam grade manually, or write 'r' to generated random grade: ";
         cin >> userInput;
+
         if (userInput == randomWord)
         {
             temp_grade = getRandomGrade();
             cout << "Random exam grade is: " << temp_grade << endl;
-            break;
         }
         else
         {
@@ -241,15 +249,15 @@ Student getUserStudentInput()
                 cout << "Invalid input!" << endl;
                 continue;
             }
-            if (temp_grade >= 1 && temp_grade <= 10)
-            {
-                student.exam = temp_grade;
-                break;
-            }
-            else
-            {
-                cout << "Grade must be between 1 and 10." << endl;
-            }
+        }
+        if (temp_grade >= 1 && temp_grade <= 10)
+        {
+            student.exam = temp_grade;
+            break;
+        }
+        else
+        {
+            cout << "Grade must be between 1 and 10." << endl;
         }
     }
 
