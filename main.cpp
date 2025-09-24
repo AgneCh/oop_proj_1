@@ -8,8 +8,8 @@
 #include <fstream>
 #include <cassert>
 #include <cctype>
+#include <chrono>
 
-// using namespace std;
 using std::cin;
 using std::cout;
 using std::endl;
@@ -23,6 +23,7 @@ using std::numeric_limits;
 using std::ofstream;
 using std::ostringstream;
 using std::random_device;
+using std::round;
 using std::setfill;
 using std::setprecision;
 using std::setw;
@@ -35,7 +36,6 @@ using std::string;
 using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
-using std::round;
 
 struct Student
 {
@@ -579,6 +579,7 @@ void createStudentFile(vector<Student> &studentList, string fileName)
 
 int main()
 {
+    using namespace std::chrono;
     string mode;
     vector<Student> students;
 
@@ -666,7 +667,13 @@ int main()
             }
 
             fileName = "Student" + to_string(fileLenght) + ".txt";
+
+            // measure execution time
+            auto t0 = steady_clock::now();
             generateRandomStudentFile(fileName, fileLenght);
+            auto ms = duration_cast<milliseconds>(steady_clock::now() - t0).count();
+            std::cout << "Generated Student"+ to_string(fileLenght) + " in: " << ms << " ms\n";
+            
 
             loadStudentsFromFile(studentData, fileName);
             cout << "\n";
@@ -682,7 +689,6 @@ int main()
             createStudentFile(strugglers, "strugglers.txt");
             createStudentFile(highAchievers, "highAchievers.txt");
             cout << "\n";
-
         }
         else
         {
