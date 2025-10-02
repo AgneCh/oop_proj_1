@@ -11,13 +11,17 @@
 #include <chrono>
 
 using std::cin;
+using std::count;
 using std::cout;
 using std::endl;
 using std::fixed;
 using std::ifstream;
 using std::invalid_argument;
 using std::isdigit;
+using std::isspace;
+using std::istreambuf_iterator;
 using std::left;
+using std::move;
 using std::mt19937;
 using std::numeric_limits;
 using std::ofstream;
@@ -36,6 +40,7 @@ using std::string;
 using std::to_string;
 using std::uniform_int_distribution;
 using std::vector;
+using std::isspace;
 
 struct Student
 {
@@ -374,36 +379,26 @@ int checkFileAvailability(string file)
     return 0;
 }
 
-vector<string> stripWhiteSpace(string &s)
+void stripWhiteSpace(string &line, vector<string> &result)
 {
-    vector<string> result;
-    string tempStr;
-    for (int i = 0; i < s.size(); i++)
+    result.clear();
+    result.reserve(8);
+
+    const size_t len = line.size();
+    size_t currPosition = 0;
+
+    while (currPosition < len)
     {
-        char currentChar = s[i];
+        while (currPosition < len && isspace(static_cast<unsigned char>(line[currPosition])))
+            ++currPosition;
+        if (currPosition >= len)
+            break;
 
-        if (currentChar != ' ')
-        {
-            tempStr = tempStr + s[i];
-
-            // make sure to push the last character
-            if (i == s.size() - 1)
-            {
-                result.push_back(tempStr);
-            }
-        }
-        else
-        {
-            if (tempStr == "")
-            {
-                continue;
-            }
-            result.push_back(tempStr);
-            tempStr = "";
-        }
+        size_t start = currPosition;
+        while (currPosition < len && !isspace(static_cast<unsigned char>(line[currPosition])))
+            ++currPosition;
+        result.emplace_back(line, start, currPosition - start);
     }
-
-    return result;
 }
 
 Student processStudentRow(vector<string> studentRow)
@@ -498,7 +493,7 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     f << left << setw(15) << "Name" << setw(15) << "Surname";
     for (int i = 0; i < 5; ++i)
         f << setw(5) << "HM" + to_string(i + 1);
-    f << setw(5) << "Exam" << endl;
+    f << setw(5) << "Exam" << '\n';
 
     for (int i = 0; i < numOfLines; ++i)
     {
@@ -509,29 +504,40 @@ void generateRandomStudentFile(string fileName, int numOfLines)
         {
             f << setw(5) << getRandomGrade();
         }
-        f << setw(5) << getRandomGrade() << endl;
+        f << setw(5) << getRandomGrade() << '\n';
     }
 
     f.close();
     cout << endl;
-    cout << "File " << fileName << " is successfully created." << endl;
+    cout << "File " << fileName << " is successfully created." << '\n';
 }
 
-void loadStudentsFromFile(vector<Student> &students, string fileName)
+void loadStudentsFromFile(vector<Student> &students, const string &fileName)
 {
-    string curLine;
     ifstream file(fileName);
+
+    size_t numOfLines = count(istreambuf_iterator<char>(file), istreambuf_iterator<char>(), '\n');
+
+    file.clear();
+    file.seekg(0);
+
+    string curLine;
     getline(file, curLine); // skip header
+    if(numOfLines > 0) --numOfLines; 
+    students.reserve(numOfLines);
+
+    vector<string> row;
+
     while (getline(file, curLine))
     {
-        if (curLine.length() == 0)
+        if (curLine.empty())
         {
             continue;
         }
 
-        vector<string> row = stripWhiteSpace(curLine);
+        stripWhiteSpace(curLine, row);
         Student student = processStudentRow(row);
-        students.push_back(student);
+        students.push_back(move(student));
     }
 }
 
@@ -586,11 +592,11 @@ int main()
     while (true)
     {
         int menuChoice = getUserMenuChoice();
-        if (menuChoice == 1)
+        if (menuChoice == 1) // Add new student 
         {
             students.push_back(getUserStudentInput());
         }
-        else if (menuChoice == 2)
+        else if (menuChoice == 2) // Calculate grades 
         {
             if (students.size() == 0)
             {
@@ -604,7 +610,7 @@ int main()
             }
             printStudents(students, mode);
         }
-        else if (menuChoice == 3)
+        else if (menuChoice == 3) // Insert student data from a file
         {
             string fileName;
             cout << "Enter file name in the following format: fileName.txt" << "\n";
@@ -619,6 +625,8 @@ int main()
             }
 
             loadStudentsFromFile(students, fileName);
+            students.shrink_to_fit();
+
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
@@ -633,7 +641,7 @@ int main()
             printStudents(students, "b");
             cout << "\n";
         }
-        else if (menuChoice == 4)
+        else if (menuChoice == 4) // Generate random student file
         {
             vector<Student> studentData;
             vector<Student> strugglers;
@@ -671,11 +679,14 @@ int main()
             // measure execution time
             auto t0 = steady_clock::now();
             generateRandomStudentFile(fileName, fileLenght);
-            auto ms = duration_cast<milliseconds>(steady_clock::now() - t0).count();
-            std::cout << "Generated Student"+ to_string(fileLenght) + " in: " << ms << " ms\n";
-            
+            auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << "Generated Student" + to_string(fileLenght) + " in: " << secCreate << " s\n";
 
+            t0 = steady_clock::now();
             loadStudentsFromFile(studentData, fileName);
+            studentData.shrink_to_fit();
+            auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << "Uploaded" + fileName + " in: " << secLoad << " ms\n";
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
