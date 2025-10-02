@@ -268,10 +268,11 @@ int getUserMenuChoice()
         cout << "2. Calculate grades" << endl;
         cout << "3. Insert student data from a file" << endl;
         cout << "4. Generate random student file" << endl;
-        cout << "5. Exit" << endl;
+        cout << "5. Sort student data into categories" << endl;
+        cout << "6. Exit" << endl;
         cout << "" << endl;
         cin >> n;
-        if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5)
+        if (n == 1 || n == 2 || n == 3 || n == 4 || n == 5 || n == 6)
         {
             return n;
         }

@@ -75,8 +75,6 @@ int main()
         else if (menuChoice == 4) // Generate random student file
         {
             vector<Student> studentData;
-            vector<Student> strugglers;
-            vector<Student> highAchievers;
 
             int fileLenght;
             string fileName;
@@ -111,13 +109,31 @@ int main()
             auto t0 = steady_clock::now();
             generateRandomStudentFile(fileName, fileLenght);
             auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Generated Student" + to_string(fileLenght) + " in: " << secCreate << " s\n";
+            cout << to_string(fileLenght) + "txt file was generated in: " << secCreate << " s\n";
 
-            t0 = steady_clock::now();
+        }
+        else if (menuChoice == 5) // sort student list into categories
+        {   
+            vector<Student> studentData;
+            vector<Student> strugglers;
+            vector<Student> highAchievers;
+            string fileName;
+            cout << "Enter file name in the following format: fileName.txt" << "\n";
+            while (true)
+            {
+                cin >> fileName;
+                if (checkFileAvailability(fileName) == 0)
+                {
+                    break;
+                }
+                cout << "Enter correct file name!" << "\n";
+            }
+
+            auto t0 = steady_clock::now();
             loadStudentsFromFile(studentData, fileName);
-            studentData.shrink_to_fit();
             auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << "Uploaded" + fileName + " in: " << secLoad << " s\n";
+            studentData.shrink_to_fit();
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
@@ -127,9 +143,20 @@ int main()
                 studentData[i] = calcFinalGrade(studentData[i]);
             }
 
+            t0 = steady_clock::now();
             categorizeStudents(studentData, strugglers, highAchievers);
+            auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << fileName + "sorted in to two groups in: " << secSorted << " s\n";
+
+            t0 = steady_clock::now();
             createStudentFile(strugglers, "strugglers.txt");
+            auto secStrug = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << "strugglers.txt created in: " << secStrug << " s\n";
+
+            t0 = steady_clock::now();
             createStudentFile(highAchievers, "highAchievers.txt");
+            auto secHA = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << "highAchievers.txt created in: " << secStrug << " s\n";
             cout << "\n";
         }
         else
