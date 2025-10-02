@@ -1,10 +1,18 @@
 #include "GradeCalc.h"
 #include <algorithm>
+#include <random>
+using std::mt19937;
+using std::uniform_int_distribution;
+using std::random_device;
 
-using std::vector;
+int getRandomGrade()
+{
+    static mt19937 gen(random_device{}()); // seed once
+    static uniform_int_distribution<int> dist(1, 10);
+    return dist(gen);
+}
 
-
-double hwMean(const vector<int>& grades)
+double hwMean(const std::vector<int>& grades)
 {
     if (grades.empty())
     {
@@ -17,7 +25,7 @@ double hwMean(const vector<int>& grades)
     return sum / grades.size();
 }
 
-double hwMedian(vector<int> grades)
+double hwMedian(std::vector<int> grades)
 {
     if (grades.empty())
     {
