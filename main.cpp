@@ -1,3 +1,5 @@
+#include "Student.h"
+#include "GradeCalc.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -42,15 +44,7 @@ using std::uniform_int_distribution;
 using std::vector;
 using std::isspace;
 
-struct Student
-{
-    string firstName;
-    string lastName;
-    vector<int> grades;
-    int exam;
-    double finalGradeMean;
-    double finalGradeMedian;
-};
+
 
 string createHeader(string mode)
 {
@@ -271,49 +265,6 @@ Student getUserStudentInput()
             cout << "Grade must be between 1 and 10." << endl;
         }
     }
-
-    return student;
-}
-
-double hwMean(vector<int> grades)
-{
-    if (grades.empty())
-    {
-        return 0.0;
-    }
-
-    double sum = 0.0;
-    for (double i : grades)
-        sum += i;
-    return sum / grades.size();
-}
-
-double hwMedian(vector<int> grades)
-{
-    if (grades.empty())
-    {
-        return 0.0;
-    }
-
-    sort(grades.begin(), grades.end());
-    int n = grades.size();
-    if (n % 2 != 0)
-    {
-        return grades[n / 2];
-    }
-    else
-    {
-        return (grades[(n - 1) / 2] + grades[n / 2]) / 2.0;
-    }
-}
-
-Student calcFinalGrade(Student student)
-{
-    double mean = hwMean(student.grades);
-    double median = hwMedian(student.grades);
-
-    student.finalGradeMean = 0.4 * mean + 0.6 * student.exam;
-    student.finalGradeMedian = 0.4 * median + 0.6 * student.exam;
 
     return student;
 }
