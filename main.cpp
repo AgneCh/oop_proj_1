@@ -18,7 +18,7 @@ int main()
 {
     using namespace std::chrono;
     string mode;
-    vector<Student> students;
+    StudentContainer students;
 
     while (true)
     {
@@ -26,6 +26,7 @@ int main()
         if (menuChoice == 1) // Add new student
         {
             students.push_back(getUserStudentInput());
+            cout << "Student data saved in memory address: " << &students.back() << "\n";
         }
         else if (menuChoice == 2) // Calculate grades
         {
@@ -35,9 +36,9 @@ int main()
                 continue;
             }
             getModeChoice(mode);
-            for (int i = 0; i < students.size(); i++)
+            for (auto& s : students)
             {
-                students[i] = calcFinalGrade(students[i]);
+                s = calcFinalGrade(s);
             }
             printStudents(students, mode);
         }
@@ -56,25 +57,32 @@ int main()
             }
 
             loadStudentsFromFile(students, fileName);
+            #ifndef USE_LIST
             students.shrink_to_fit();
+            #endif
 
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
+            #ifdef USE_LIST
+            students.sort(compareStudentCharacters);
+            students.sort(compareStudentNumbers);
+            #else
             sort(students.begin(), students.end(), compareStudentCharacters);
             sort(students.begin(), students.end(), compareStudentNumbers);
+            #endif
 
             cout << "\n";
-            for (int i = 0; i < students.size(); i++)
+            for (auto& s : students)
             {
-                students[i] = calcFinalGrade(students[i]);
+                s = calcFinalGrade(s);
             }
             printStudents(students, "b");
             cout << "\n";
         }
         else if (menuChoice == 4) // Generate random student file
         {
-            vector<Student> studentData;
+            StudentContainer studentData;
 
             int fileLenght;
             string fileName;
@@ -114,9 +122,9 @@ int main()
         }
         else if (menuChoice == 5) // sort student list into categories
         {   
-            vector<Student> studentData;
-            vector<Student> strugglers;
-            vector<Student> highAchievers;
+            StudentContainer studentData;
+            StudentContainer strugglers;
+            StudentContainer highAchievers;
             string fileName;
             cout << "Enter file name in the following format: fileName.txt" << "\n";
             while (true)
@@ -133,14 +141,16 @@ int main()
             loadStudentsFromFile(studentData, fileName);
             auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << "Uploaded" + fileName + " in: " << secLoad << " s\n";
+            #ifndef USE_LIST
             studentData.shrink_to_fit();
+            #endif
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
 
-            for (int i = 0; i < studentData.size(); i++)
+            for (auto& s : studentData)
             {
-                studentData[i] = calcFinalGrade(studentData[i]);
+                s = calcFinalGrade(s);
             }
 
             t0 = steady_clock::now();

@@ -58,7 +58,7 @@ bool compareStudentNumbers(Student a, Student b)
     return aInt < bInt;
 }
 
-void categorizeStudents(vector<Student> &allStudents, vector<Student> &belowFive, vector<Student> &fiveAndUp)
+void categorizeStudents(StudentContainer& allStudents, StudentContainer& belowFive, StudentContainer& fiveAndUp)
 {
     double threshold = 5.0;
 

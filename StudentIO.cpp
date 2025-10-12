@@ -138,15 +138,11 @@ string formatStudentRow(const Student &student, string mode)
     return studentRow.str();
 }
 
-void printStudents(vector<Student> &students, string mode)
-{
-
-    Student student;
+void printStudents(StudentContainer& students, string mode){
 
     cout << createHeader(mode);
-    for (int i = 0; i < students.size(); i++)
+    for (auto& student : students)
     {
-        student = students[i];
         cout << formatStudentRow(student, mode);
     }
 }
@@ -321,7 +317,9 @@ int checkFileAvailability(string file)
 void stripWhiteSpace(string &line, vector<string> &result)
 {
     result.clear();
+    #ifndef USE_LIST
     result.reserve(8);
+    #endif
 
     const size_t len = line.size();
     size_t currPosition = 0;
@@ -401,7 +399,7 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     cout << "File " << fileName << " is successfully created." << '\n';
 }
 
-void loadStudentsFromFile(vector<Student>& students, std::string fileName)
+void loadStudentsFromFile(StudentContainer& students, std::string fileName)
 {
     ifstream file(fileName);
 
@@ -414,7 +412,9 @@ void loadStudentsFromFile(vector<Student>& students, std::string fileName)
     getline(file, curLine); // skip header
     if (numOfLines > 0)
         --numOfLines;
+    #ifndef USE_LIST
     students.reserve(numOfLines);
+    #endif
 
     vector<string> row;
 
@@ -431,9 +431,8 @@ void loadStudentsFromFile(vector<Student>& students, std::string fileName)
     }
 }
 
-void createStudentFile(vector<Student> &studentList, string fileName)
+void createStudentFile(StudentContainer& studentList, string fileName)
 {
-    Student student;
     ofstream f(fileName);
     if (!f.is_open())
     {
@@ -442,9 +441,8 @@ void createStudentFile(vector<Student> &studentList, string fileName)
     }
 
     f << createHeader("m");
-    for (int i = 0; i < studentList.size(); i++)
+    for (auto& student : studentList)
     {
-        student = studentList[i];
         f << formatStudentRow(student, "m");
     }
     f.close();

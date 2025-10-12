@@ -1,9 +1,11 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <list>
 
 using std::string;
 using std::vector;
+using std::list;
 
 struct Student
 {
@@ -14,3 +16,9 @@ struct Student
     double finalGradeMean;
     double finalGradeMedian;
 };
+
+#ifdef USE_LIST
+using StudentContainer = list<Student>;
+#else
+using StudentContainer = vector<Student>;
+#endif
