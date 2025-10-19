@@ -8,11 +8,11 @@
 #include <algorithm>
 #include <chrono>
 
-using std::vector;
-using std::cout;
 using std::cin;
+using std::cout;
 using std::invalid_argument;
 using std::to_string;
+using std::vector;
 
 int main()
 {
@@ -36,7 +36,7 @@ int main()
                 continue;
             }
             getModeChoice(mode);
-            for (auto& s : students)
+            for (auto &s : students)
             {
                 s = calcFinalGrade(s);
             }
@@ -57,23 +57,23 @@ int main()
             }
 
             loadStudentsFromFile(students, fileName);
-            #ifndef USE_LIST
+#ifndef USE_LIST
             students.shrink_to_fit();
-            #endif
+#endif
 
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
-            #ifdef USE_LIST
+#ifdef USE_LIST
             students.sort(compareStudentCharacters);
             students.sort(compareStudentNumbers);
-            #else
+#else
             sort(students.begin(), students.end(), compareStudentCharacters);
             sort(students.begin(), students.end(), compareStudentNumbers);
-            #endif
+#endif
 
             cout << "\n";
-            for (auto& s : students)
+            for (auto &s : students)
             {
                 s = calcFinalGrade(s);
             }
@@ -118,14 +118,14 @@ int main()
             generateRandomStudentFile(fileName, fileLenght);
             auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << to_string(fileLenght) + "txt file was generated in: " << secCreate << " s\n";
-
         }
         else if (menuChoice == 5) // sort student list into categories
-        {   
+        {
             StudentContainer studentData;
             StudentContainer strugglers;
             StudentContainer highAchievers;
             string fileName;
+            string sortChoice;
             cout << "Enter file name in the following format: fileName.txt" << "\n";
             while (true)
             {
@@ -141,14 +141,14 @@ int main()
             loadStudentsFromFile(studentData, fileName);
             auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << "Uploaded" + fileName + " in: " << secLoad << " s\n";
-            #ifndef USE_LIST
+#ifndef USE_LIST
             studentData.shrink_to_fit();
-            #endif
+#endif
             cout << "\n";
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
 
-            for (auto& s : studentData)
+            for (auto &s : studentData)
             {
                 s = calcFinalGrade(s);
             }

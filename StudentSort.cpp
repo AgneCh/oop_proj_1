@@ -3,10 +3,10 @@
 #include <cctype>
 #include <string>
 
-using std::string;
 using std::isdigit;
-using std::stoi;
 using std::round;
+using std::stoi;
+using std::string;
 
 string getNameCharacters(string name)
 {
@@ -58,7 +58,14 @@ bool compareStudentNumbers(Student a, Student b)
     return aInt < bInt;
 }
 
-void categorizeStudents(StudentContainer& allStudents, StudentContainer& belowFive, StudentContainer& fiveAndUp)
+bool compareStudentGrades(const Student &a, const Student &b)
+{
+    double aGrade = a.finalGradeMean;
+    double bGrade = b.finalGradeMean;
+    return aGrade < bGrade;
+}
+
+void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
 {
     double threshold = 5.0;
 
