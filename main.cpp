@@ -156,7 +156,7 @@ int main()
             t0 = steady_clock::now();
             categorizeStudents(studentData, strugglers, highAchievers);
             auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << fileName + "sorted in to two groups in: " << secSorted << " s\n";
+            cout << fileName + " sorted in to two groups in: " << secSorted << " s\n";
 
             cout << "To sort categorized files by name type 'n' or 'g' to sort by grade: " << "\n";
 
