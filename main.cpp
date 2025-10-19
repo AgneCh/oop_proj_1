@@ -158,6 +158,37 @@ int main()
             auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << fileName + "sorted in to two groups in: " << secSorted << " s\n";
 
+            cout << "To sort categorized files by name type 'n' or 'g' to sort by grade: " << "\n";
+
+            while (true)
+
+            {
+                cin >> sortChoice;
+
+                if (sortChoice == "n")
+
+                {
+                    sort(strugglers.begin(), strugglers.end(), compareStudentCharacters);
+                    sort(strugglers.begin(), strugglers.end(), compareStudentNumbers);
+
+                    sort(highAchievers.begin(), highAchievers.end(), compareStudentCharacters);
+                    sort(highAchievers.begin(), highAchievers.end(), compareStudentNumbers);
+
+                    break;
+                }
+
+                else if (sortChoice == "g")
+
+                {
+                    sort(strugglers.begin(), strugglers.end(), compareStudentGrades);
+                    sort(highAchievers.begin(), highAchievers.end(), compareStudentGrades);
+
+                    break;
+                }
+
+                cout << "Invalid choice!\n";
+            }
+
             t0 = steady_clock::now();
             createStudentFile(strugglers, "strugglers.txt");
             auto secStrug = duration_cast<duration<double>>(steady_clock::now() - t0).count();
