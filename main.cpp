@@ -191,14 +191,9 @@ int main()
 
             t0 = steady_clock::now();
             createStudentFile(strugglers, "strugglers.txt");
-            auto secStrug = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "strugglers.txt created in: " << secStrug << " s\n";
-
-            t0 = steady_clock::now();
             createStudentFile(highAchievers, "highAchievers.txt");
-            auto secHA = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "highAchievers.txt created in: " << secStrug << " s\n";
-            cout << "\n";
+            auto sec = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << "Categorized files were created in: " << sec << " s\n";
         }
         else
         {
