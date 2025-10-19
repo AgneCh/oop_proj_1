@@ -168,21 +168,32 @@ int main()
                 if (sortChoice == "n")
 
                 {
+#ifdef USE_LIST
+                    strugglers.sort(compareStudentCharacters);
+                    strugglers.sort(compareStudentNumbers);
+                    highAchievers.sort(compareStudentCharacters);
+                    highAchievers.sort(compareStudentNumbers);
+
+#else
                     sort(strugglers.begin(), strugglers.end(), compareStudentCharacters);
                     sort(strugglers.begin(), strugglers.end(), compareStudentNumbers);
 
                     sort(highAchievers.begin(), highAchievers.end(), compareStudentCharacters);
                     sort(highAchievers.begin(), highAchievers.end(), compareStudentNumbers);
-
+#endif
                     break;
                 }
 
                 else if (sortChoice == "g")
 
                 {
+#ifdef USE_LIST
+                    strugglers.sort(compareStudentGrades);
+                    highAchievers.sort(compareStudentGrades);
+#else
                     sort(strugglers.begin(), strugglers.end(), compareStudentGrades);
                     sort(highAchievers.begin(), highAchievers.end(), compareStudentGrades);
-
+#endif
                     break;
                 }
 
