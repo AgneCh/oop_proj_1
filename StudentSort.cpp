@@ -3,66 +3,43 @@
 #include <cctype>
 #include <string>
 
-using std::isdigit;
 using std::round;
-using std::stoi;
 using std::string;
 
-string getNameCharacters(string name)
-{
-    string result = "";
-    char current;
-    for (int i = 0; i < name.length(); i++)
-    {
-        current = name[i];
-        if (!isdigit(current))
-        {
-            result = result + current;
-        }
-    }
-    return result;
+std::string_view getNameLetters(const std::string& s) {
+    size_t i = 0;
+    while (i < s.size() && !(s[i] >= '0' && s[i] <= '9')) ++i;
+    return std::string_view{s.data(), i};
 }
 
-int getNameNumbers(string name)
+int getNameNumber(const string &s)
 {
-    string result = "";
-    char current;
-    for (int i = 0; i < name.length(); i++)
+    size_t i = 0;
+    while (i < s.size() && !(s[i] >= '0' && s[i] <= '9'))
+        ++i;
+    int number = 0;
+    while (i < s.size() && (s[i] >= '0' && s[i] <= '9'))
     {
-        current = name[i];
-        if (isdigit(current))
-        {
-            result = result + current;
-        }
+        number = number * 10 + (s[i] - '0');
+        ++i;
     }
-    if (result.size() != 0)
-    {
-        return stoi(result);
-    }
-    else
-    {
-        return 0;
-    }
+    return number;
 }
 
-bool compareStudentCharacters(Student a, Student b)
+bool compareStudentNames(const Student &a, const Student &b)
 {
-    string aStr = getNameCharacters(a.firstName);
-    string bStr = getNameCharacters(b.firstName);
-    return aStr < bStr;
-}
-bool compareStudentNumbers(Student a, Student b)
-{
-    int aInt = getNameNumbers(a.firstName);
-    int bInt = getNameNumbers(b.firstName);
-    return aInt < bInt;
+    auto aLetters = getNameLetters(a.firstName);
+    auto bLetters = getNameLetters(b.firstName);
+
+    if (aLetters != bLetters)
+        return aLetters < bLetters;
+
+    return getNameNumber(a.firstName) < getNameNumber(b.firstName);
 }
 
 bool compareStudentGrades(const Student &a, const Student &b)
 {
-    double aGrade = a.finalGradeMean;
-    double bGrade = b.finalGradeMean;
-    return aGrade < bGrade;
+    return a.finalGradeMean < b.finalGradeMean;
 }
 
 void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)

@@ -30,6 +30,7 @@ int main()
         }
         else if (menuChoice == 2) // Calculate grades
         {
+            
             if (students.size() == 0)
             {
                 cout << "No student data found in the system!" << "\n";
@@ -65,11 +66,10 @@ int main()
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
 #ifdef USE_LIST
-            students.sort(compareStudentCharacters);
-            students.sort(compareStudentNumbers);
+            students.sort(compareStudentNames);
+
 #else
-            sort(students.begin(), students.end(), compareStudentCharacters);
-            sort(students.begin(), students.end(), compareStudentNumbers);
+            sort(students.begin(), students.end(), compareStudentNames);
 #endif
 
             cout << "\n";
@@ -169,17 +169,13 @@ int main()
 
                 {
 #ifdef USE_LIST
-                    strugglers.sort(compareStudentCharacters);
-                    strugglers.sort(compareStudentNumbers);
-                    highAchievers.sort(compareStudentCharacters);
-                    highAchievers.sort(compareStudentNumbers);
+                    strugglers.sort(compareStudentNames);
+                    highAchievers.sort(compareStudentNames);
 
 #else
-                    sort(strugglers.begin(), strugglers.end(), compareStudentCharacters);
-                    sort(strugglers.begin(), strugglers.end(), compareStudentNumbers);
+                    sort(strugglers.begin(), strugglers.end(), compareStudentNames);
 
-                    sort(highAchievers.begin(), highAchievers.end(), compareStudentCharacters);
-                    sort(highAchievers.begin(), highAchievers.end(), compareStudentNumbers);
+                    sort(highAchievers.begin(), highAchievers.end(), compareStudentNames);
 #endif
                     break;
                 }
