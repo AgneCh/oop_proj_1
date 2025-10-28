@@ -51,8 +51,7 @@ void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFi
 
     for (const auto &s : allStudents)
     {
-        double roundedGrade = round(s.finalGradeMean);
-        if (roundedGrade < threshold)
+        if (s.finalGradeMean < threshold)
         {
             belowFive.push_back(s);
         }

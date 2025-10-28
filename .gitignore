@@ -41,4 +41,8 @@
 *.dwo
 .vscode/
 
+# Ignore generated output files
+highAchievers.txt
+strugglers.txt
+
 main

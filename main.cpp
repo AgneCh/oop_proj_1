@@ -26,7 +26,6 @@ int main()
         if (menuChoice == 1) // Add new student
         {
             students.push_back(getUserStudentInput());
-            cout << "Student data saved in memory address: " << &students.back() << "\n";
         }
         else if (menuChoice == 2) // Calculate grades
         {
