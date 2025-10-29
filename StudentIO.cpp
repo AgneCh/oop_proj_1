@@ -10,7 +10,7 @@
 #include <cassert>
 #include <cctype>
 #include <iterator>
-#include <sstream> 
+#include <sstream>
 
 using std::cin;
 using std::count;
@@ -21,7 +21,7 @@ using std::ifstream;
 using std::invalid_argument;
 using std::isdigit;
 using std::isspace;
-using std::isspace;
+using std::istreambuf_iterator;
 using std::left;
 using std::move;
 using std::numeric_limits;
@@ -37,15 +37,20 @@ using std::stoi;
 using std::streamsize;
 using std::string;
 using std::to_string;
-using std::istreambuf_iterator;
 using std::vector;
 
-string createHeader(string mode)
+string createHeader(const std::string &mode, bool showAddress)
 {
     ostringstream header;
     const int wLastName = 15;
     const int wFirsName = 15;
     const int wGrade = 20;
+
+    if (showAddress)
+    {
+        header << left
+               << setw(18) << "Address";
+    }
 
     if (mode == "m")
     {
@@ -93,15 +98,25 @@ string createHeader(string mode)
                << setw(wGrade) << "" << '\n'
                << setfill(' ');
     }
+
     return header.str();
 }
 
-string formatStudentRow(const Student &student, string mode)
+string formatStudentRow(const Student &student, const std::string &mode, bool showAddress)
 {
     ostringstream studentRow;
     const int wLastName = 15;
     const int wFirsName = 15;
     const int wGrade = 20;
+
+    if (showAddress)
+    {
+        ostringstream address;
+        const void *studAddr = static_cast<const void *>(&student);
+        address << studAddr;
+        studentRow << left
+                   << setw(18) << address.str();
+    }
 
     if (mode == "m")
     {
@@ -138,12 +153,13 @@ string formatStudentRow(const Student &student, string mode)
     return studentRow.str();
 }
 
-void printStudents(StudentContainer& students, string mode){
+void printStudents(StudentContainer &students, const std::string &mode, bool showAddress)
+{
 
-    cout << createHeader(mode);
-    for (auto& student : students)
+    cout << createHeader(mode, showAddress);
+    for (auto &student : students)
     {
-        cout << formatStudentRow(student, mode);
+        cout << formatStudentRow(student, mode, showAddress);
     }
 }
 
@@ -317,9 +333,9 @@ int checkFileAvailability(string file)
 void stripWhiteSpace(string &line, vector<string> &result)
 {
     result.clear();
-    #ifndef USE_LIST
+#ifndef USE_LIST
     result.reserve(8);
-    #endif
+#endif
 
     const size_t len = line.size();
     size_t currPosition = 0;
@@ -399,7 +415,7 @@ void generateRandomStudentFile(string fileName, int numOfLines)
     cout << "File " << fileName << " is successfully created." << '\n';
 }
 
-void loadStudentsFromFile(StudentContainer& students, std::string fileName)
+void loadStudentsFromFile(StudentContainer &students, std::string fileName)
 {
     ifstream file(fileName);
 
@@ -412,9 +428,9 @@ void loadStudentsFromFile(StudentContainer& students, std::string fileName)
     getline(file, curLine); // skip header
     if (numOfLines > 0)
         --numOfLines;
-    #ifndef USE_LIST
+#ifndef USE_LIST
     students.reserve(numOfLines);
-    #endif
+#endif
 
     vector<string> row;
 
@@ -431,7 +447,7 @@ void loadStudentsFromFile(StudentContainer& students, std::string fileName)
     }
 }
 
-void createStudentFile(StudentContainer& studentList, string fileName)
+void createStudentFile(StudentContainer &studentList, string fileName)
 {
     ofstream f(fileName);
     if (!f.is_open())
@@ -441,7 +457,7 @@ void createStudentFile(StudentContainer& studentList, string fileName)
     }
 
     f << createHeader("m");
-    for (auto& student : studentList)
+    for (auto &student : studentList)
     {
         f << formatStudentRow(student, "m");
     }

@@ -11,9 +11,9 @@ int getUserMenuChoice();
 void getModeChoice(std::string& mode);
 
 // formatting
-std::string createHeader(std::string mode);
-std::string formatStudentRow(const Student& student, std::string mode);
-void printStudents(StudentContainer& students, std::string mode);
+std::string createHeader(const std::string& mode, bool showAddress = false);
+std::string formatStudentRow(const Student& student, const std::string& mode, bool showAddress = false);
+void printStudents(StudentContainer& students, const std::string& mode, bool showAddress = false);
 
 
 // files

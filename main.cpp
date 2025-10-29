@@ -19,12 +19,14 @@ int main()
     using namespace std::chrono;
     string mode;
     StudentContainer students;
+    bool showAddressForConsole = false;
 
     while (true)
     {
         int menuChoice = getUserMenuChoice();
         if (menuChoice == 1) // Add new student
         {
+            showAddressForConsole = true;
             students.push_back(getUserStudentInput());
         }
         else if (menuChoice == 2) // Calculate grades
@@ -40,7 +42,7 @@ int main()
             {
                 s = calcFinalGrade(s);
             }
-            printStudents(students, mode);
+            printStudents(students, mode, showAddressForConsole);
         }
         else if (menuChoice == 3) // Insert student data from a file
         {
