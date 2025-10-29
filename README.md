@@ -17,7 +17,7 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 
 ## Rezultatai
 
-# Atsitiksinių studentų sąrašų failų kūrimas (vid.)
+Atsitiksinių studentų sąrašų failų kūrimas (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
 | 1 000        | 0.0017713         | 0.001936278
@@ -27,7 +27,7 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 | 10 000 000   | 4.3473            | 4.343814
 
 
-# Duomenų nuskaitymas iš failų (vid.)
+Duomenų nuskaitymas iš failų (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
 | 1 000        | 0.002358702       | 0.001804468
@@ -37,7 +37,7 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 | 10 000 000   | 6.60041           | 6.604486
 
 
-# Studentų rūšiavimas į dvi kategorijas (vid.)
+Studentų rūšiavimas į dvi kategorijas (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
 | 1 000        | 0.000294958       | 0.000172689
@@ -47,9 +47,9 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 | 10 000 000   | 1.192148          | 1.1188372
 
 
-# Surūšiuotų studentų išvedimas į du naujus failus (vid.)
+Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
-|--------------|-------------------|----------------|
+|--------------|-------------------|-----------------|
 | 1 000        | 0.002195244       | 0.00879666
 | 10 000       | 0.0164007         | 0.01603442
 | 100 000      | 0.05875878        | 0.07475656
