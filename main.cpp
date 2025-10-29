@@ -57,8 +57,11 @@ int main()
                 }
                 cout << "Enter correct file name!" << "\n";
             }
-
+            auto t0 = steady_clock::now();
             loadStudentsFromFile(students, fileName);
+            auto secUpload = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            cout << fileName + " file was generated in: " << secUpload << " s\n";
+
 #ifndef USE_LIST
             students.shrink_to_fit();
 #endif
@@ -67,19 +70,21 @@ int main()
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
 #ifdef USE_LIST
+            cout << "using list"<< "\n";
             students.sort(compareStudentNames);
 
 #else
             sort(students.begin(), students.end(), compareStudentNames);
 #endif
 
-            cout << "\n";
-            for (auto &s : students)
-            {
-                s = calcFinalGrade(s);
-            }
-            printStudents(students, "b");
-            cout << "\n";
+            // cout << "\n";
+            // for (auto &s : students)
+            // {
+            //     s = calcFinalGrade(s);
+            // }
+            // printStudents(students, "b");
+            // cout << "\n";
+            // cout << fileName + " file was generated in: " << secUpload << " s\n";
         }
         else if (menuChoice == 4) // Generate random student file
         {
@@ -170,6 +175,7 @@ int main()
 
                 {
 #ifdef USE_LIST
+                    cout << "using list"<< "\n";
                     strugglers.sort(compareStudentNames);
                     highAchievers.sort(compareStudentNames);
 
@@ -185,6 +191,7 @@ int main()
 
                 {
 #ifdef USE_LIST
+                    cout << "using list"<< "\n";
                     strugglers.sort(compareStudentGrades);
                     highAchievers.sort(compareStudentGrades);
 #else

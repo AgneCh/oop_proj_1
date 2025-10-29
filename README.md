@@ -7,12 +7,12 @@ Testavimui naudoti tie patys duomenų failai kaip ir `v0.2` versijoje.
 Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1000, 10000, 100000, 1000000, 10000000 įrašų).
 
 ## Testavimo aplinka
-| Parametras | Reikšmė |
-|-------------|----------|
-| CPU | Intel(R) Core(TM) i7-1065G7 |
-| RAM | 8 GB |
-| Diskas | SSD |
-| OS | Ubuntu 24.04.3 LTS |
+| Parametras |  Reikšmė                    | 
+|------------|-----------------------------|
+| CPU        | Intel(R) Core(TM) i7-1065G7 |
+| RAM        | 8 GB                        |
+| Diskas     | SSD                         |
+| OS         | Ubuntu 24.04.3 LTS          |
 
 
 ## Rezultatai
@@ -20,41 +20,41 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 # Atsitiksinių studentų sąrašų failų kūrimas (vid.)
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
-| 1 000        |                   |
-| 10 000       |                   |
-| 100 000      |                   |
-| 1 000 000    |                   |
-| 10 000 000   |                   |
+| 1 000        | 0.0017713         |
+| 10 000       | 0.00814588        |
+| 100 000      | 0.05982952        |
+| 1 000 000    | 0.4506244         |
+| 10 000 000   | 4.3473            |
 
 
 # Duomenų nuskaitymas iš failų (vid.)
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
-| 1 000        |                   |
-| 10 000       |                   |
-| 100 000      |                   |
-| 1 000 000    |                   |
-| 10 000 000   |                   |
+| 1 000        | 0.002358702       |
+| 10 000       | 0.01968436        |
+| 100 000      | 0.08291886        |
+| 1 000 000    | 0.6835998         |
+| 10 000 000   | 6.60041           |
 
 
 # Studentų rūšiavimas į dvi kategorijas (vid.)
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
-| 1 000        |                   |
-| 10 000       |                   |
-| 100 000      |                   |
-| 1 000 000    |                   |
-| 10 000 000   |                   |
+| 1 000        | 0.000294958       |
+| 10 000       | 0.002069002       |
+| 100 000      | 0.01242656        |
+| 1 000 000    | 0.1211802         |
+| 10 000 000   | 1.192148          |
 
 
 # Surūšiuotų studentų išvedimas į du naujus failus (vid.)
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
 |--------------|-------------------|----------------|
-| 1 000        |                   |
-| 10 000       |                   |
-| 100 000      |                   |
-| 1 000 000    |                   |
-| 10 000 000   |                   |
+| 1 000        | 0.002195244       |
+| 10 000       | 0.0164007         |
+| 100 000      | 0.05875878        |
+| 1 000 000    | 0.5272746         |
+| 10 000 000   | 4.934834          |
 
 
 
