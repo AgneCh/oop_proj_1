@@ -60,7 +60,7 @@ int main()
             auto t0 = steady_clock::now();
             loadStudentsFromFile(students, fileName);
             auto secUpload = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << fileName + " file was generated in: " << secUpload << " s\n";
+            cout << fileName + " file was uploaded in: " << secUpload << " s\n";
 
 #ifndef USE_LIST
             students.shrink_to_fit();
@@ -77,14 +77,14 @@ int main()
             sort(students.begin(), students.end(), compareStudentNames);
 #endif
 
-            // cout << "\n";
-            // for (auto &s : students)
-            // {
-            //     s = calcFinalGrade(s);
-            // }
-            // printStudents(students, "b");
-            // cout << "\n";
-            // cout << fileName + " file was generated in: " << secUpload << " s\n";
+            cout << "\n";
+            for (auto &s : students)
+            {
+                s = calcFinalGrade(s);
+            }
+            printStudents(students, "b");
+            cout << "\n";
+            cout << fileName + " file was generated in: " << secUpload << " s\n";
         }
         else if (menuChoice == 4) // Generate random student file
         {
