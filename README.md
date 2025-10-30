@@ -25,7 +25,6 @@ Atsitiksinių studentų sąrašų failų kūrimas (vid.):
 | 100 000      | 0.05982952        | 0.06057134
 | 1 000 000    | 0.4506244         | 0.4379546
 | 10 000 000   | 4.3473            | 4.343814
-|--------------|-------------------|-----------------|
 ![10 000000 įrašų kūrimas su vector](screenshots/image-1.png)
 ![10 000000 įrašų kūrimas su list](screenshots/image-2.png)
 
@@ -38,7 +37,8 @@ Duomenų nuskaitymas iš failų (vid.):
 | 100 000      | 0.08291886        | 0.078372
 | 1 000 000    | 0.6835998         | 0.561991
 | 10 000 000   | 6.60041           | 6.604486
-
+![10 000000 duomenų nuskaitymas su vector](screenshots/image.png)
+![10 000000 duomenų nuskaitymas su list](screenshots/image-3.png)
 
 Studentų rūšiavimas į dvi kategorijas (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
@@ -48,7 +48,8 @@ Studentų rūšiavimas į dvi kategorijas (vid.):
 | 100 000      | 0.01242656        | 0.01240088
 | 1 000 000    | 0.1211802         | 0.10524554
 | 10 000 000   | 1.192148          | 1.1188372
-
+![10 000000 įrašų rūšiavimas į dvi kategorijas su vector ](screenshots/image-6.png)
+![10 000000 įrašų rūšiavimas į dvi kategorijas su list](screenshots/image-4.png)
 
 Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
@@ -58,6 +59,7 @@ Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 | 100 000      | 0.05875878        | 0.07475656
 | 1 000 000    | 0.5272746         | 0.6350894
 | 10 000 000   | 4.934834          | 5.80888
-
+![10 000000 išvedimas į du naujus failus su vector](screenshots/image-7.png)
+![10 000000 išvedimas į du naujus failus su list](screenshots/image-5.png)
 
 
