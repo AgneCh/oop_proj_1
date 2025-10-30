@@ -46,9 +46,6 @@ void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFi
 {
     double threshold = 5.0;
 
-    belowFive.clear();
-    fiveAndUp.clear();
-
     for (const auto &s : allStudents)
     {
         if (s.finalGradeMean < threshold)

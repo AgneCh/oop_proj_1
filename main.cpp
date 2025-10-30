@@ -60,7 +60,6 @@ int main()
             auto t0 = steady_clock::now();
             loadStudentsFromFile(students, fileName);
             auto secUpload = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << fileName + " file was uploaded in: " << secUpload << " s\n";
 
 #ifndef USE_LIST
             students.shrink_to_fit();
@@ -70,7 +69,6 @@ int main()
             cout << "Student data is uploaded to the system." << "\n";
             cout << "\n";
 #ifdef USE_LIST
-            cout << "using list"<< "\n";
             students.sort(compareStudentNames);
 
 #else
@@ -84,7 +82,7 @@ int main()
             }
             printStudents(students, "b");
             cout << "\n";
-            cout << fileName + " file was generated in: " << secUpload << " s\n";
+            cout << fileName + " file was uploaded in: " << secUpload << " s using " << getContainerName() << "\n";
         }
         else if (menuChoice == 4) // Generate random student file
         {
@@ -123,7 +121,7 @@ int main()
             auto t0 = steady_clock::now();
             generateRandomStudentFile(fileName, fileLenght);
             auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << to_string(fileLenght) + "txt file was generated in: " << secCreate << " s\n";
+            cout << "Student" + to_string(fileLenght) + ".txt file was generated in: " << secCreate << " s using " << getContainerName() << "\n";
         }
         else if (menuChoice == 5) // sort student list into categories
         {
@@ -146,7 +144,7 @@ int main()
             auto t0 = steady_clock::now();
             loadStudentsFromFile(studentData, fileName);
             auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Uploaded" + fileName + " in: " << secLoad << " s\n";
+            cout << "Uploaded" + fileName + " in: " << secLoad << " s using " << getContainerName() << "\n";
 #ifndef USE_LIST
             studentData.shrink_to_fit();
 #endif
@@ -162,7 +160,7 @@ int main()
             t0 = steady_clock::now();
             categorizeStudents(studentData, strugglers, highAchievers);
             auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << fileName + " sorted in to two groups in: " << secSorted << " s\n";
+            cout << fileName + " sorted in to two groups in: " << secSorted << " s using " << getContainerName() << "\n";
 
             cout << "To sort categorized files by name type 'n' or 'g' to sort by grade: " << "\n";
 
@@ -175,7 +173,6 @@ int main()
 
                 {
 #ifdef USE_LIST
-                    cout << "using list"<< "\n";
                     strugglers.sort(compareStudentNames);
                     highAchievers.sort(compareStudentNames);
 
@@ -191,7 +188,6 @@ int main()
 
                 {
 #ifdef USE_LIST
-                    cout << "using list"<< "\n";
                     strugglers.sort(compareStudentGrades);
                     highAchievers.sort(compareStudentGrades);
 #else
@@ -208,7 +204,7 @@ int main()
             createStudentFile(strugglers, "strugglers.txt");
             createStudentFile(highAchievers, "highAchievers.txt");
             auto sec = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Categorized files were created in: " << sec << " s\n";
+            cout << "Categorized files were created in: " << sec << " s using " << getContainerName() << "\n";
         }
         else
         {

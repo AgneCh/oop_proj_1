@@ -19,6 +19,12 @@ struct Student
 
 #ifdef USE_LIST
 using StudentContainer = list<Student>;
+inline const char* getContainerName() {
+    return "std::list<Student>";
+}
 #else
 using StudentContainer = vector<Student>;
+inline const char* getContainerName() {
+    return "std::vector<Student>";
+}
 #endif
