@@ -25,6 +25,8 @@ Atsitiksinių studentų sąrašų failų kūrimas (vid.):
 | 100 000      | 0.05982952        | 0.06057134
 | 1 000 000    | 0.4506244         | 0.4379546
 | 10 000 000   | 4.3473            | 4.343814
+![10 000000 įrašų kūrimas su vector](screenshots/image-1.png)
+![10 000000 įrašų kūrimas su list](screenshots/image-2.png)
 
 
 Duomenų nuskaitymas iš failų (vid.):
