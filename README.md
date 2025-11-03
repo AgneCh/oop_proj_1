@@ -62,9 +62,23 @@ Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 ![10 000000 išvedimas į du naujus failus su vector](screenshots/image-7.png)
 ![10 000000 išvedimas į du naujus failus su list](screenshots/image-5.png)
 
-# (v0.3)
 # (v0.2)
 # (v0.1)
+Šiame release programa patobulinta taip, kad vartojas galetų nuskaityti studentų duomenis is txt failo.
+Nuskaityti duomenys išvedami į tą pati lentelės pavidalą kaip ir v.pradine versijoje:
+
+|Name    |Surname   |Final grade (mean)  |Final grade (median)  |
+|--------|----------|--------------------|----------------------|
+|Name1   |Surname1  |8.00                |8.00                  |
+...
+
+Studentų duomenys yra rušioujami pagal vardą.
+
+Buvo sėkmingai atidaryti visi testavimo failai:
+studentai10000.txt
+studentai100000.txt 
+studentai1000000.txt,
+
 
 # (v.pradine)
 Programa  priema studento vardą ir pavardę, namų darbų tarpinius rezultatus ir egzamino rezultatą, ir iš balų išveda galutinį balą.
