@@ -2,13 +2,16 @@
 #include <cmath>
 #include <cctype>
 #include <string>
+#include <iostream>
 
 using std::round;
 using std::string;
 
-std::string_view getNameLetters(const std::string& s) {
+std::string_view getNameLetters(const std::string &s)
+{
     size_t i = 0;
-    while (i < s.size() && !(s[i] >= '0' && s[i] <= '9')) ++i;
+    while (i < s.size() && !(s[i] >= '0' && s[i] <= '9'))
+        ++i;
     return std::string_view{s.data(), i};
 }
 
@@ -42,13 +45,13 @@ bool compareStudentGrades(const Student &a, const Student &b)
     return a.finalGradeMean < b.finalGradeMean;
 }
 
-void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
+// Stradegy 1
+void categorizeStudents_1(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
 {
-    double threshold = 5.0;
 
     for (const auto &s : allStudents)
     {
-        if (s.finalGradeMean < threshold)
+        if (s.finalGradeMean < 5.0)
         {
             belowFive.push_back(s);
         }
@@ -57,4 +60,26 @@ void categorizeStudents(StudentContainer &allStudents, StudentContainer &belowFi
             fiveAndUp.push_back(s);
         }
     }
+}
+
+// Stradegy 2
+void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
+{
+
+    auto it = std::remove_if(allStudents.begin(), allStudents.end(), [&](const Student &s)
+                             {
+        if (s.finalGradeMean < 5.0) {
+            belowFive.push_back(s);
+            return true; // remove from allStudents
+        }
+        return false; });
+    allStudents.erase(it, allStudents.end());
+    fiveAndUp = allStudents;
+}
+
+
+// Stradegy 3
+void categorizeStudents_3(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
+{
+    std::cout << "coming soon..";
 }

@@ -31,7 +31,7 @@ int main()
         }
         else if (menuChoice == 2) // Calculate grades
         {
-            
+
             if (students.size() == 0)
             {
                 cout << "No student data found in the system!" << "\n";
@@ -157,8 +157,18 @@ int main()
                 s = calcFinalGrade(s);
             }
 
+            int choice;
+            std::cout << "Choose categorization stategy (1, 2 or 3): ";
+            std::cin >> choice;
+
             t0 = steady_clock::now();
-            categorizeStudents(studentData, strugglers, highAchievers);
+            if (choice == 1)
+                categorizeStudents_1(studentData, strugglers, highAchievers);
+            else if (choice == 2)
+                categorizeStudents_2(studentData, strugglers, highAchievers);
+            else
+                categorizeStudents_3(studentData, strugglers, highAchievers);
+            
             auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << fileName + " sorted in to two groups in: " << secSorted << " s using " << getContainerName() << "\n";
 
