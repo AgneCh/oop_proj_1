@@ -2,7 +2,6 @@
 #include <cmath>
 #include <cctype>
 #include <string>
-#include <iostream>
 
 using std::round;
 using std::string;
@@ -77,9 +76,12 @@ void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &below
     fiveAndUp = allStudents;
 }
 
-
 // Stradegy 3
 void categorizeStudents_3(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
 {
-    std::cout << "coming soon..";
+    auto it = std::partition(allStudents.begin(), allStudents.end(), [](const Student &s)
+                             { return s.finalGradeMean < 5.0; });
+
+    belowFive.assign(allStudents.begin(), it);
+    fiveAndUp.assign(it, allStudents.end());
 }
