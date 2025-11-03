@@ -75,9 +75,9 @@ Nuskaityti duomenys išvedami į tą pati lentelės pavidalą kaip ir v.pradine 
 Studentų duomenys yra rušioujami pagal vardą.
 
 Buvo sėkmingai atidaryti visi testavimo failai:
-studentai10000.txt
-studentai100000.txt 
-studentai1000000.txt,
+- studentai10000.txt
+- studentai100000.txt 
+- studentai1000000.txt
 
 
 # (v.pradine)
