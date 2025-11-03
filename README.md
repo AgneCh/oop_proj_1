@@ -62,7 +62,48 @@ Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 ![10 000000 išvedimas į du naujus failus su vector](screenshots/image-7.png)
 ![10 000000 išvedimas į du naujus failus su list](screenshots/image-5.png)
 
+
 # (v0.2)
+Atlikus programos spartos testus su skirtingais duomenų failų dydžiais (1 tūkst., 10 tūkst., 100 tūkst., 1 mln. ir 10 mln. įrašų), nustatyta:
+- Failų kūrimo laikas auga beveik tiesiškai priklausomai nuo įrašų kiekio.
+- Duomenų nuskaitymas užtrunka ilgiau nei kūrimas, ypač su dideliais failais (pvz., 10 mln. įrašų nuskaitymas užtruko vidutiniškai 6,3 s).
+
+| Įrašų kiekis | Atsitiksinių studentų sąrašų failų kūrimo vid. (s) |
+|--------------|----------------------------------------------------|
+| 1 000        | 0.003338122                                        |
+| 10 000       | 0.010401078                                        |
+| 100 000      | 0.05856702                                         |
+| 1 000 000    | 0.4611562                                          |
+| 10 000 000   | 4.250476                                           |
+
+
+| Įrašų kiekis | Duomenų nuskaitymas iš failų vid. (s) |
+|--------------|---------------------------------------|
+| 1 000        | 0.002008618                           |
+| 10 000       | 0.010693404                           |
+| 100 000      | 0.0747804                             |
+| 1 000 000    | 0.6019136                             |
+| 10 000 000   | 6.308904                              |
+
+
+| Įrašų kiekis | Studentų rūšiavimas į dvi kategorijas vid. (s) |
+|--------------|------------------------------------------------|
+| 1 000        | 0.000288262                                    |
+| 10 000       | 0.001714236                                    |
+| 100 000      | 0.01753584                                     |
+| 1 000 000    | 0.1313298                                      |
+| 10 000 000   | 1.46565                                        |
+
+
+| Įrašų kiekis | Surūšiuotų studentų išvedimas į du naujus failus vid. (s) |
+|--------------|-----------------------------------------------------------|
+| 1 000        | 0.001948826                                               |
+| 10 000       | 0.013065428                                               |
+| 100 000      | 0.06703692                                                |
+| 1 000 000    | 0.5017516                                                 |
+| 10 000 000   | 4.878024                                                  |
+
+
 # (v0.1)
 Šiame release programa patobulinta taip, kad vartojas galetų nuskaityti studentų duomenis is txt failo.
 Nuskaityti duomenys išvedami į tą pati lentelės pavidalą kaip ir v.pradine versijoje:
