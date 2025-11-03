@@ -62,4 +62,11 @@ Surūšiuotų studentų išvedimas į du naujus failus (vid.):
 ![10 000000 išvedimas į du naujus failus su vector](screenshots/image-7.png)
 ![10 000000 išvedimas į du naujus failus su list](screenshots/image-5.png)
 
+# (v0.3)
+# (v0.2)
+# (v0.1)
 
+# (v.pradine)
+Programa  priema studento vardą ir pavardę, namų darbų tarpinius rezultatus ir egzamino rezultatą, ir iš balų išveda galutinį balą.
+Išvedama lentelė su studentų vardais ir galutiniu balu paskaičiuotu pagal varotojo pasirinkimą (Galutinis (Vid.) arba Galutinis (Med.) ar abudu). Galutiniais balais suskaičiuotais pagal formulę:
+Galutinis = 0.4 * vidurkis + 0.6 * egzaminas
