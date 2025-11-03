@@ -64,16 +64,37 @@ void categorizeStudents_1(StudentContainer &allStudents, StudentContainer &below
 // Stradegy 2
 void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
 {
+#ifdef USE_LIST
 
-    auto it = std::remove_if(allStudents.begin(), allStudents.end(), [&](const Student &s)
-                             {
-        if (s.finalGradeMean < 5.0) {
-            belowFive.push_back(s);
-            return true; // remove from allStudents
+    for (auto it = allStudents.begin(); it != allStudents.end();)
+    {
+        auto cur = it++;
+        if (cur->finalGradeMean < 5.0)
+            belowFive.splice(belowFive.end(), allStudents, cur);
+        else
+            fiveAndUp.splice(fiveAndUp.end(), allStudents, cur);
+    }
+
+#else
+    belowFive.reserve(allStudents.size() / 2);
+    fiveAndUp.reserve(allStudents.size() / 2);
+    std::size_t i = 0;
+    while (i < allStudents.size())
+    {
+        if (allStudents[i].finalGradeMean < 5.0)
+        {
+            belowFive.push_back(std::move(allStudents[i]));
+            allStudents[i] = std::move(allStudents.back());
+            allStudents.pop_back();
         }
-        return false; });
-    allStudents.erase(it, allStudents.end());
-    fiveAndUp = allStudents;
+        else
+        {
+            ++i;
+        }
+    }
+    fiveAndUp = std::move(allStudents);
+
+#endif
 }
 
 // Stradegy 3

@@ -1,5 +1,11 @@
 # oop_proj_1
 
+# (v1.0)
+Programoje studentų dalijimo į dvi kategorijas buvo naudojama funkcija, kuri atitinka 1 strategiją.
+Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas.
+
+
+
 
 # (v0.3)
 Šioje versijoje (`v0.3`) buvo atliktas testavimas, siekiant palyginti `std::vector` ir `std::list` veikimo spartą.
