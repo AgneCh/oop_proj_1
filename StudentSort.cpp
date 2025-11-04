@@ -99,9 +99,26 @@ void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &below
 // Stradegy 3
 void categorizeStudents_3(StudentContainer &allStudents, StudentContainer &belowFive, StudentContainer &fiveAndUp)
 {
-    auto it = std::partition(allStudents.begin(), allStudents.end(), [](const Student &s)
-                             { return s.finalGradeMean < 5.0; });
+#ifdef USE_LIST
+    auto isBelow5 = [](const Student& s){ return s.finalGradeMean < 5.0; };
+    auto mid = std::partition(allStudents.begin(), allStudents.end(), isBelow5);
+    belowFive.splice(belowFive.end(), allStudents, allStudents.begin(), mid);
 
-    belowFive.assign(allStudents.begin(), it);
-    fiveAndUp.assign(it, allStudents.end());
+#else
+    auto isBelow5 = [](const Student &s)
+    { return s.finalGradeMean < 5.0; };
+
+    belowFive.reserve(allStudents.size() / 2);
+    fiveAndUp.reserve(allStudents.size() / 2);
+
+    auto newEnd = std::remove_if(allStudents.begin(), allStudents.end(), isBelow5);
+
+    belowFive.assign(std::make_move_iterator(newEnd),
+                     std::make_move_iterator(allStudents.end()));
+
+    allStudents.erase(newEnd, allStudents.end());
+
+#endif
+
+    fiveAndUp = std::move(allStudents);
 }

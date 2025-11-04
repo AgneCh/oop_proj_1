@@ -168,7 +168,7 @@ int main()
                 categorizeStudents_2(studentData, strugglers, highAchievers);
             else
                 categorizeStudents_3(studentData, strugglers, highAchievers);
-            
+
             auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
             cout << fileName + " sorted in to two groups in: " << secSorted << " s using " << getContainerName() << "\n";
 
