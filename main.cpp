@@ -21,7 +21,7 @@ int main()
 #elif defined(USE_LIST)
     std::cout << ">>> Using std::list container <<<\n";
 #else
-    std::cout << ">>> No container macro defined <<<\n";
+    std::cout << ">>> No container macro defined, using std::vector as default <<<\n";
 #endif
 
     using namespace std::chrono;
