@@ -9,8 +9,8 @@ Programai reikalinga:
 
 
 ### Programos kompiliavimas
-Kompiliuoti su std::vector konteineriu: make arba make vector
-Kompiliuoti su std::list konteineriu: make list
+- Kompiliuoti su std::vector konteineriu: make arba make vector
+- Kompiliuoti su std::list konteineriu: make list
 
 ### Programos paleidimas
 ./student_program
