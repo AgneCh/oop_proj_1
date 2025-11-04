@@ -16,6 +16,14 @@ using std::vector;
 
 int main()
 {
+#ifdef USE_VECTOR
+    std::cout << ">>> Using std::vector container <<<\n";
+#elif defined(USE_LIST)
+    std::cout << ">>> Using std::list container <<<\n";
+#else
+    std::cout << ">>> No container macro defined <<<\n";
+#endif
+
     using namespace std::chrono;
     string mode;
     StudentContainer students;
@@ -57,9 +65,9 @@ int main()
                 }
                 cout << "Enter correct file name!" << "\n";
             }
-            auto t0 = steady_clock::now();
+            // auto t0 = steady_clock::now();
             loadStudentsFromFile(students, fileName);
-            auto secUpload = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            // auto secUpload = duration_cast<duration<double>>(steady_clock::now() - t0).count();
 
 #ifndef USE_LIST
             students.shrink_to_fit();
@@ -82,7 +90,7 @@ int main()
             }
             printStudents(students, "b");
             cout << "\n";
-            cout << fileName + " file was uploaded in: " << secUpload << " s using " << getContainerName() << "\n";
+            // cout << fileName + " file was uploaded in: " << secUpload << " s using " << getContainerName() << "\n";
         }
         else if (menuChoice == 4) // Generate random student file
         {
@@ -108,7 +116,7 @@ int main()
                     }
                     break;
                 }
-                catch (invalid_argument err)
+                catch (const std::invalid_argument &err)
                 {
                     cout << "Invalid input!" << "\n";
                     continue;
@@ -118,10 +126,10 @@ int main()
             fileName = "Student" + to_string(fileLenght) + ".txt";
 
             // measure execution time
-            auto t0 = steady_clock::now();
+            // auto t0 = steady_clock::now();
             generateRandomStudentFile(fileName, fileLenght);
-            auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Student" + to_string(fileLenght) + ".txt file was generated in: " << secCreate << " s using " << getContainerName() << "\n";
+            // auto secCreate = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            // cout << "Student" + to_string(fileLenght) + ".txt file was generated in: " << secCreate << " s using " << getContainerName() << "\n";
         }
         else if (menuChoice == 5) // sort student list into categories
         {
@@ -141,10 +149,10 @@ int main()
                 cout << "Enter correct file name!" << "\n";
             }
 
-            auto t0 = steady_clock::now();
+            // auto t0 = steady_clock::now();
             loadStudentsFromFile(studentData, fileName);
-            auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Uploaded" + fileName + " in: " << secLoad << " s using " << getContainerName() << "\n";
+            // auto secLoad = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            // cout << "Uploaded" + fileName + " in: " << secLoad << " s using " << getContainerName() << "\n";
 #ifndef USE_LIST
             studentData.shrink_to_fit();
 #endif
@@ -161,7 +169,7 @@ int main()
             std::cout << "Choose categorization stategy (1, 2 or 3): ";
             std::cin >> choice;
 
-            t0 = steady_clock::now();
+            // t0 = steady_clock::now();
             if (choice == 1)
                 categorizeStudents_1(studentData, strugglers, highAchievers);
             else if (choice == 2)
@@ -169,8 +177,8 @@ int main()
             else
                 categorizeStudents_3(studentData, strugglers, highAchievers);
 
-            auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << fileName + " sorted in to two groups in: " << secSorted << " s using " << getContainerName() << "\n";
+            // auto secSorted = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            // cout << fileName + " sorted in to two groups in: " << secSorted << " s using " << getContainerName() << "\n";
 
             cout << "To sort categorized files by name type 'n' or 'g' to sort by grade: " << "\n";
 
@@ -210,11 +218,11 @@ int main()
                 cout << "Invalid choice!\n";
             }
 
-            t0 = steady_clock::now();
+            // t0 = steady_clock::now();
             createStudentFile(strugglers, "strugglers.txt");
             createStudentFile(highAchievers, "highAchievers.txt");
-            auto sec = duration_cast<duration<double>>(steady_clock::now() - t0).count();
-            cout << "Categorized files were created in: " << sec << " s using " << getContainerName() << "\n";
+            // auto sec = duration_cast<duration<double>>(steady_clock::now() - t0).count();
+            // cout << "Categorized files were created in: " << sec << " s using " << getContainerName() << "\n";
         }
         else
         {

@@ -206,7 +206,7 @@ Student getUserStudentInput()
                     continue;
                 }
             }
-            catch (invalid_argument err)
+            catch (const std::invalid_argument& err)
             {
                 cout << "Invalid input!" << endl;
                 continue;
@@ -248,7 +248,7 @@ Student getUserStudentInput()
                     continue;
                 }
             }
-            catch (invalid_argument err)
+            catch (const std::invalid_argument& err)
             {
                 cout << "Invalid input!" << endl;
                 continue;
@@ -366,10 +366,10 @@ Student processStudentRow(vector<string> studentRow)
     student.firstName = firstname;
     student.lastName = lastname;
 
-    for (int i = 2; i < studentRow.size(); i++)
+    for (std::size_t i = 2; i < studentRow.size(); i++)
     {
         double tempGrade = stoi(studentRow[i]);
-        if (i == studentRow.size() - 1)
+        if (i + 1 == studentRow.size())
         {
             student.exam = tempGrade;
         }

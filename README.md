@@ -5,8 +5,6 @@ Programoje studentų dalijimo į dvi kategorijas buvo naudojama funkcija, kuri a
 Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas. 3 strategija buvo sukurta panaudojant 2 strategiją.
 
 
-
-
 ## Rezultatai
 
 - `std::vector` konteinerio atveju 2 ir 3 strategijos veikia sparčiau už 1 strategiją, bet 2 strategija yra optimaliausia.
