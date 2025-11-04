@@ -2,7 +2,8 @@
 
 # (v1.0)
 Programoje studentų dalijimo į dvi kategorijas buvo naudojama funkcija, kuri atitinka 1 strategiją.
-Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas.
+Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas. 3 strategija buvo sukurta panaudojant 2 strategiją.
+
 
 ## Rezultatai
 
@@ -37,6 +38,9 @@ Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas.
 Testavimui naudoti tie patys duomenų failai kaip ir `v0.2` versijoje.  
 Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1000, 10000, 100000, 1000000, 10000000 įrašų).
 
+
+
+
 ## Testavimo aplinka
 | Parametras |  Reikšmė                    | 
 |------------|-----------------------------|
@@ -47,6 +51,14 @@ Kiekvienam konteineriui buvo atliekami matavimai su tokiais įrašų kiekiais (1
 
 
 ## Rezultatai
+
+- Atsitiksinių studentų failų kūrimo atveju `std::vector` ir `std::list` rezultatai labai nesiskyrė. Nedidelių įrašų kiekių (pvz., 1000 ar 10000) atveju skirtumas tarp `std::vector` ir `std::list` buvo vos kelių milisekundžių ribose, todėl galima teigti, kad abiejų konteinerių efektyvumas šiuo atveju beveik identiškas.
+- Duomenų nuskaitymo iš failų atveju `std::list` buvo vidutiniškai partesnis už `std::vector`, tačiau šis pranašumas nebuvo labai ženklus.
+- Studentų rūšiavimo į dvi kategorijas atveju `std::list` konteineris buvo šiek tiek spartesnis už `std::vector`, ypač didėjant duomenų kiekiui (1 ir 10 milijonų įrašų). Mažesnių duomenų kiekių atveju skirtumas buvo beveik nepastebimas.
+- Surūšiuotų studentų išvedimo į du naujus failus atveju `std::vector` konteineris buvo pastebimai spartesnis už `std::list`, ypač kai įrašų kiekis buvo didelis.
+
+Atliktų testų rezultatai parodė, kad `std::vector` ir `std::list` našumas buvo panašus, tačiau `std::list` šiek tiek geriau pasirodė duomenų nuskaitymo ir rūšiavimo etapuose, o `std::vector` buvo efektyvesnis išvedant didelius duomenų kiekius į failus.
+
 
 Atsitiksinių studentų sąrašų failų kūrimas (vid.):
 | Įrašų kiekis | `std::vector` (s) | `std::list` (s) |
