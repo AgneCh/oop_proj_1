@@ -4,6 +4,25 @@
 Programoje studentų dalijimo į dvi kategorijas buvo naudojama funkcija, kuri atitinka 1 strategiją.
 Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas.
 
+## Rezultatai
+
+### VECTOR Studentų rūšiavimas į dvi kategorijas (vid.):
+| Įrašų kiekis | 1 strategija (s) | 2 strategija (s) | 3 strategija (s) |
+|--------------|------------------|------------------|------------------|
+| 1 000        | 0.000391227      | 0.0000778666     | 0.00019286  
+| 10 000       | 0.002069002      | 0.000172689      | 0.000172689
+| 100 000      | 0.01242656       | 0.000172689      | 0.000172689
+| 1 000 000    | 0.1211802        | 0.000172689      | 0.000172689
+| 10 000 000   | 1.192148         | 0.000172689      | 0.000172689
+
+### LIST Studentų rūšiavimas į dvi kategorijas (vid.):
+| Įrašų kiekis | 1 strategija (s) | 2 strategija (s) | 3 strategija (s) |
+|--------------|------------------|------------------|------------------|
+| 1 000        | 0.000294958      | 0.000172689      | 0.000172689
+| 10 000       | 0.002069002      | 0.000172689      | 0.000172689
+| 100 000      | 0.01242656       | 0.000172689      | 0.000172689
+| 1 000 000    | 0.1211802        | 0.000172689      | 0.000172689
+| 10 000 000   | 1.192148         | 0.000172689      | 0.000172689
 
 
 

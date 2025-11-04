@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cctype>
 #include <string>
+#include <iterator>
 
 using std::round;
 using std::string;
@@ -71,8 +72,6 @@ void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &below
         auto cur = it++;
         if (cur->finalGradeMean < 5.0)
             belowFive.splice(belowFive.end(), allStudents, cur);
-        else
-            fiveAndUp.splice(fiveAndUp.end(), allStudents, cur);
     }
 
 #else
@@ -92,9 +91,9 @@ void categorizeStudents_2(StudentContainer &allStudents, StudentContainer &below
             ++i;
         }
     }
-    fiveAndUp = std::move(allStudents);
 
 #endif
+    fiveAndUp = std::move(allStudents);
 }
 
 // Stradegy 3
