@@ -9,21 +9,27 @@ Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas.
 ### VECTOR Studentų rūšiavimas į dvi kategorijas (vid.):
 | Įrašų kiekis | 1 strategija (s) | 2 strategija (s) | 3 strategija (s) |
 |--------------|------------------|------------------|------------------|
-| 1 000        | 0.000249402      | 4.53356e-05      | 7.53746e-05  
+| 1 000        | 0.000249402      | 0.0000453356     | 0.0000753746  
 | 10 000       | 0.00279157       | 0.000420785      | 0.000658982
 | 100 000      | 0.01678          | 0.00316335       | 0.00590283
 | 1 000 000    | 0.124591         | 0.0336813        | 0.05502
 | 10 000 000   | 1.3581           | 0.370949         | 0.574973
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 1 strategija](screenshots/image-8.png)
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 2 strategija](screenshots/image-9.png)
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 3 strategija](screenshots/image-10.png)
+
 
 ### LIST Studentų rūšiavimas į dvi kategorijas (vid.):
 | Įrašų kiekis | 1 strategija (s) | 2 strategija (s) | 3 strategija (s) |
 |--------------|------------------|------------------|------------------|
-| 1 000        | 0.000195842      | 1.8741e-05       | 3.22838e-05
+| 1 000        | 0.000195842      | 0.000018741      | 0.0000322838
 | 10 000       | 0.00156636       | 0.000257923      | 0.000537038
 | 100 000      | 0.0174754        | 0.00318448       | 0.00357223
 | 1 000 000    | 0.163567         | 0.0285604        | 0.0272477
 | 10 000 000   | 1.71859          | 0.278273         | 0.254779
-
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 1 strategija](screenshots/image-11.png)
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 2 strategija](screenshots/image-12.png)
+![10 000000 įrašų rūšiavimas į dvi kategorijas naudojant 3 strategija](screenshots/image-13.png)
 
 
 # (v0.3)
