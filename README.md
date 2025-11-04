@@ -1,5 +1,24 @@
 # oop_proj_1
 
+# Programos diegimo instrukcija (Unix / Ubuntu OS)
+### Reikalavimai
+Programai reikalinga:
+- C++17 versijos kompiliatorius (`g++`)
+- `make` įrankis
+
+
+
+### Programos kompiliavimas
+Kompiliuoti su std::vector konteineriu: make arba make vector
+Kompiliuoti su std::list konteineriu: make list
+
+### Programos paleidimas
+./student_program
+
+### Išvalyti sugeneruotus failus
+make clean
+
+
 # (v1.0)
 Programoje studentų dalijimo į dvi kategorijas buvo naudojama funkcija, kuri atitinka 1 strategiją.
 Todėl buvo sukurto dvi naujos funkcijos naudojant 2 ir 3 strategijas. 3 strategija buvo sukurta panaudojant 2 strategiją.
